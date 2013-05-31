@@ -10,6 +10,7 @@ This is a practice hash map in C, written to understand hash maps more deeply.
 * Build system (throw the switch)
 * Consistent style (?)
 * Continuous integration (Travis-CI)
+* Benchmarks
 
 ## Authors
 
