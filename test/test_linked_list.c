@@ -23,7 +23,7 @@ void test_append() {
 	}
 
 	linked_list_node *node;
-	for(i = 0, node = linked_list_head(list); node; ++i, node = node->next) {
+	for(i = 0, node = linked_list_head(list); node != NULL; ++i, node = node->next) {
 		TEST_ASSERT_EQUAL_INT(data[i], *(int*)node->data);
 	}
 }
@@ -38,7 +38,7 @@ void test_prepend() {
 	}
 
 	linked_list_node *node;
-	for(i = data_length-1, node = linked_list_head(list); node; --i, node = node->next) {
+	for(i = data_length-1, node = linked_list_head(list); node != NULL; --i, node = node->next) {
 		TEST_ASSERT_EQUAL_INT(data[i], *(int*)node->data);
 	}
 }
