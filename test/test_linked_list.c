@@ -16,15 +16,13 @@ void test_empty_list() {
 
 void test_append() {
 	const unsigned data_length = 4;
-	int data[] = {111, 131, 35, 42};
+	int data[data_length] = {111, 131, 35, 42};
 
-	unsigned i;
-	for(i = 0; i < data_length; ++i) {
+	for(unsigned i = 0; i < data_length; ++i) {
 		linked_list_append(list, &data[i]);
 	}
 
-	linked_list_node *node;
-	for(i = 0, node = linked_list_head(list); node; ++i, node = node->next) {
+	for(unsigned i = 0, linked_list_node *node = linked_list_head(list); node; ++i, node = node->next) {
 		TEST_ASSERT_EQUAL_INT(data[i], *(int*)node->data);
 	}
 }
