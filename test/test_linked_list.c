@@ -10,8 +10,8 @@ void setUp() {
 	linked_list_init(list);
 }
 
-void test_empty_list_node_is_tail() {
-	TEST_ASSERT_TRUE(linked_list_is_tail(linked_list_head(list)));
+void test_empty_list() {
+	TEST_ASSERT_NULL(linked_list_head(list));
 }
 
 void test_append() {
@@ -24,11 +24,8 @@ void test_append() {
 	}
 
 	linked_list_node *node;
-	for(
-		i = 0, node = linked_list_head(list);
-		!linked_list_is_tail(node);
-		++i, node = linked_list_next(node)) {
-		TEST_ASSERT_EQUAL_INT(data[i], *(int*)linked_list_data(node));
+	for(i = 0, node = linked_list_head(list); node; ++i, node = node->next) {
+		TEST_ASSERT_EQUAL_INT(data[i], *(int*)node->data);
 	}
 }
 

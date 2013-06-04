@@ -17,8 +17,8 @@ linked_list_node *linked_list_head(linked_list *list) {
 
 void linked_list_append(linked_list *list, void *data) {
 	linked_list_node *node = list->head;
-	while(!linked_list_is_tail(linked_list_next(node))) {
-		node = linked_list_next(node);
+	while(node->next) {
+		node = node->next;
 	}
 	linked_list_node *new_node = safe_malloc(sizeof(linked_list_node));
 	new_node->data = data;
@@ -30,23 +30,10 @@ void linked_list_free(linked_list *list) {
 	linked_list_node *previous_node = list->head;
 	linked_list_node *current_node;
 	do {
-		current_node = linked_list_next(previous_node);
+		current_node = previous_node->next;
 		safe_free(previous_node);
 		previous_node = current_node;
-	} while(!linked_list_is_tail(current_node));
+	} while(current_node);
 
 	list->head = NULL;
-}
-
-/* Linked list node operations */
-bool linked_list_is_tail(linked_list_node *node) {
-	return node == NULL;
-}
-
-linked_list_node *linked_list_next(linked_list_node *node) {
-	return node->next;
-}
-
-void *linked_list_data(linked_list_node *node) {
-	return node->data;
 }
