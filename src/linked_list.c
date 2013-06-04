@@ -26,6 +26,13 @@ void linked_list_append(linked_list *list, void *data) {
 	node->next = new_node;
 }
 
+void linked_list_prepend(linked_list *list, void *data) {
+	linked_list_node *new_node = safe_malloc(sizeof(linked_list_node));
+	new_node->data = data;
+	new_node->next = list->head->next;
+	list->head->next = new_node;
+}
+
 void linked_list_free(linked_list *list) {
 	linked_list_node *previous_node = list->head;
 	linked_list_node *current_node;
