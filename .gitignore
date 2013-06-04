@@ -15,6 +15,3 @@
 *.exe
 *.out
 *.app
-
-# Build directory
-/build
