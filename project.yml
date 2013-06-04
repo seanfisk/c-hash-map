@@ -57,10 +57,56 @@
     int8:     INT8
     bool:     UINT8
 
-#:tools:
 # Ceedling defaults to using gcc for compiling, linking, etc.
-# As [:tools] is blank, gcc will be used (so long as it's in your system path)
-# See documentation to configure a given toolchain for use
+# If [:tools] is blank, gcc will be used (so long as it's in your system path)
+
+:tools:
+  :test_compiler:
+    :executable: clang
+    :name: Clang
+    :arguments:
+      - -DTEST
+      - -I"$": COLLECTION_PATHS_TEST_SUPPORT_SOURCE_INCLUDE_VENDOR
+      - -c ${1} # source code input file
+      - -o ${2} # object file output
+      - -g # add debugging symbols
+      - -std=c99
+  :test_linker:
+    :executable: clang
+    :name: Clang
+    :arguments:
+      - -DTEST
+      - ${1} # list of object files to link
+      - -o ${2} # executable file output
+  :test_file_preprocessor:
+    :executable: clang
+    :name: Clang
+    :arguments:
+      - -E
+      - -DTEST
+      - -I"$": COLLECTION_PATHS_TEST_SUPPORT_SOURCE_INCLUDE_VENDOR
+      - ${1} # source code input files
+      - -o ${2} # object file output
+  :test_dependencies_generator:
+    :executable: clang
+    :name: Clang
+  :release_compiler:
+    :executable: clang
+    :name: Clang
+    :arguments:
+      - -I"$": COLLECTION_PATHS_RELEASE_TOOLCHAIN_INCLUDE
+      - -c ${1} # source code input file
+      - -o ${2} # object file output
+      - -std=c99
+  :release_linker:
+    :executable: clang
+    :name: Clang
+    :arguments:
+      - ${1} # list of object files to link
+      - -o ${2} # executable file output
+  :release_dependencies_generator:
+    :executable: clang
+    :name: Clang
 
 :plugins:
   :load_paths:
