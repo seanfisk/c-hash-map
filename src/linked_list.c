@@ -33,6 +33,26 @@ void linked_list_prepend(linked_list *list, void *data) {
 	list->head->next = new_node;
 }
 
+void linked_list_remove_first(linked_list *list, void *data) {
+	linked_list_node *previous_node = list->head;
+	linked_list_node *current_node = previous_node->next;
+	while(true) {
+		// Is the first node a match?
+		if(current_node->data == data) {
+			previous_node->next = current_node->next;
+			safe_free(current_node);
+			return;
+		}
+		// Exit when we are at the end.
+		if(current_node->next == NULL) {
+			break;
+		}
+		// Increment
+		previous_node = current_node;
+		current_node = current_node->next;
+	}
+}
+
 void linked_list_free(linked_list *list) {
 	linked_list_node *previous_node = list->head;
 	linked_list_node *current_node;
