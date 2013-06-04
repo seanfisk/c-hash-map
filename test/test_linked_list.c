@@ -15,11 +15,10 @@ void test_empty_list() {
 }
 
 void test_append() {
-	const unsigned data_length = 4;
 	int data[] = {111, 131, 35, 42};
 
 	unsigned i;
-	for(i = 0; i < data_length; ++i) {
+	for(i = 0; i < sizeof(data) / sizeof(*data); ++i) {
 		linked_list_append(list, &data[i]);
 	}
 
