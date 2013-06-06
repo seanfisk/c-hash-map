@@ -21,11 +21,11 @@ inline size_t hash_map_default_hash_func(const void *key, size_t capacity) {
 	return *((size_t *) key) % capacity;
 }
 
-void hash_map_init(hash_map *map, hash_map_comparator comparator, hash_map_hash_func hash_func) {
-	map->capacity = 1000;
-	map->table = (void **) safe_malloc(sizeof(void *) * map->capacity);
+void hash_map_init(hash_map *map, size_t capacity, hash_map_comparator comparator, hash_map_hash_func hash_func) {
+	map->capacity = capacity;
 
-	memset(map->table, 0, sizeof(void *) * map->capacity);
+	map->table = (linked_list **) safe_malloc(sizeof(linked_list *) * map->capacity);
+	memset(map->table, 0, sizeof(linked_list *) * map->capacity);
 
 	if (comparator) {
 		map->comparator = comparator;
