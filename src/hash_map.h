@@ -15,6 +15,11 @@ typedef struct __hash_map {
 	hash_map_hash_func hash_func;
 } hash_map;
 
+typedef struct __hash_map_pair {
+	void *key;
+	void *value;
+} hash_map_pair;
+
 void hash_map_init(hash_map *map, hash_map_comparator comparator, hash_map_hash_func hash_func);
 void hash_map_free(hash_map *map);
 
