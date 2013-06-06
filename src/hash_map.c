@@ -100,6 +100,6 @@ void hash_map_set(hash_map *map, void *key, void *value) {
 	}
 
 	// or else insert new one
-	linked_list_append(list, pair);
+	linked_list_prepend(list, pair);
 }
 
