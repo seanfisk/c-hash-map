@@ -2,16 +2,14 @@
 
 #include "memory.h"
 
-/* Linked list operations */
-
-void linked_list_init(linked_list *list, linked_list_comparator comparator, destructor free_node) {
+void linked_list_init(linked_list *list, linked_list_comparator comparator, linked_list_destructor free_data) {
 	// Allocate a sentinel node
 	linked_list_node *sentinel = safe_malloc(sizeof(linked_list_node));
 	sentinel->next = NULL;
 	list->head = sentinel;
 
 	list->comparator = comparator;
-	list->free_node = free_node;
+	list->free_data = free_data;
 }
 
 linked_list_node *linked_list_head(linked_list *list) {
@@ -61,8 +59,8 @@ void linked_list_free(linked_list *list) {
 	linked_list_node *current_node = previous_node->next;
 
 	while(current_node != NULL) {
-		if(list->free_node != NULL) {
-		    list->free_node(current_node->data);
+		if(list->free_data != NULL) {
+		    list->free_data(current_node->data);
 		}
 		safe_free(previous_node);
 		previous_node = current_node;

@@ -3,8 +3,8 @@
  * Simple linked list implementation
  */
 
-#ifndef _LINKED_LIST_H_
-#define _LINKED_LIST_H_
+#ifndef LINKED_LIST_H
+#define LINKED_LIST_H
 
 #include <stdbool.h>
 
@@ -21,14 +21,14 @@ typedef int (*linked_list_comparator)(const void *l, const void *r);
  * memory, pass in `NULL` to call nothing. For memory allocated with
  * `malloc`, pass in `free`.
  */
-typedef void (*destructor)(const void *datum);
+typedef void (*linked_list_destructor)(const void *data);
 
 /**
  * Linked list node structure
  */
-typedef struct linked_list_node_tag {
+typedef struct _linked_list_node {
 	/** Pointer to the next node */
-	struct linked_list_node_tag *next;
+	struct _linked_list_node *next;
 	/** Pointer to data */
 	void *data;
 } linked_list_node;
@@ -42,7 +42,7 @@ typedef struct {
 	/** Comparator function used for @ref linked_list_remove_first */
 	linked_list_comparator comparator;
 	/** Function used to free data */
-	destructor free_node;
+	linked_list_destructor free_data;
 } linked_list;
 
 /**
@@ -51,7 +51,7 @@ typedef struct {
  * @param comparator data comparator function
  * @param free_list data de-allocation function
  */
-void linked_list_init(linked_list *list, linked_list_comparator comparator, destructor free_list);
+void linked_list_init(linked_list *list, linked_list_comparator comparator, linked_list_destructor free_list);
 
 /**
  * Get the first linked list node.
@@ -86,9 +86,9 @@ void linked_list_remove_first(linked_list *list, void *data);
 
 /**
  * Free the linked list and all its nodes and data. Uses @ref
- * destructor function passed to @ref linked_list_init
+ * linked_list_destructor function passed to @ref linked_list_init
  * @param list linked list structure
  */
 void linked_list_free(linked_list *list);
 
-#endif /* _LINKED_LIST_H_ */
+#endif
