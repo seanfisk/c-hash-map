@@ -11,7 +11,7 @@
 
 ## Code
 
-* Pass in free function
+* Pass in free function to hash map
 * Remove from hash map
 
 ### Optimizations
