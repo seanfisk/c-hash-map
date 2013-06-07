@@ -1,6 +1,11 @@
 # Hash Map in C
 
-[![Build Status](https://travis-ci.org/seanfisk/c-hash-map.png)](https://travis-ci.org/seanfisk/c-hash-map)
+<!--
+We'd like to use this as our main page and Doxygen doesn't support images as links.
+Doxygen also doesn't support inline HTML. Oh well.
+-->
+[Travis-CI Build Status](https://travis-ci.org/seanfisk/c-hash-map)
+![Build Status](https://travis-ci.org/seanfisk/c-hash-map.png)
 
 This is a practice hash map in C, written to understand hash maps more deeply.
 
