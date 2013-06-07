@@ -77,7 +77,7 @@ void hash_map_set(hash_map *map, void *key, void *value) {
 
 	if (!list) {
 		list = (linked_list *) safe_malloc(sizeof(linked_list));
-		linked_list_init(list, map->comparator);
+		linked_list_init(list, map->comparator, (destructor) NULL);
 		map->table[map->hash_func(key, map->capacity)] = list;
 	}
 
