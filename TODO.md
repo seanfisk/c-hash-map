@@ -12,7 +12,6 @@
 ## Code
 
 * Pass in free function
-* Add comparator function to linked_list
 * Remove from hash map
 
 ### Optimizations
