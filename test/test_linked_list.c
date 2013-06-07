@@ -2,10 +2,12 @@
 #include "memory.h"
 
 #include <unity.h>
+#include <stdlib.h>
 
 #include <string.h>
 
 static linked_list *list;
+static linked_list *dynamic_list;
 
 int intp_equal(const int *l, const int *r) {
 	// Need to return 0 for equality, anything else for inequality.
@@ -14,11 +16,16 @@ int intp_equal(const int *l, const int *r) {
 
 void setUp() {
 	list = safe_malloc(sizeof(linked_list));
-	linked_list_init(list, (linked_list_comparator)intp_equal);
+
+	linked_list_init(list, (linked_list_comparator) intp_equal, (destructor) NULL);
+
+	dynamic_list = safe_malloc(sizeof(linked_list));
+	linked_list_init(dynamic_list, (linked_list_comparator) intp_equal, (destructor) free);
 }
 
 void test_empty_list() {
 	TEST_ASSERT_NULL(linked_list_head(list));
+	TEST_ASSERT_NULL(linked_list_head(dynamic_list));
 }
 
 void test_append() {
@@ -35,9 +42,48 @@ void test_append() {
 	}
 }
 
+void test_append_dynamic() {
+	int data_length = 6;
+	int *data = (int *) malloc(sizeof(int) * data_length);
+
+	for(int i = 0; i < data_length; i++) {
+		data[i] = i * 100;
+	}
+
+	unsigned i;
+	for(i = 0; i < data_length; ++i) {
+		linked_list_append(list, &data[i]);
+	}
+
+	linked_list_node *node;
+	for(i = 0, node = linked_list_head(list); node != NULL; ++i, node = node->next) {
+		TEST_ASSERT_EQUAL_INT(data[i], *(int*)node->data);
+	}
+}
+
+
 void test_prepend() {
 	int data[] = {111, 131, 35, 42};
 	int data_length = sizeof(data) / sizeof(*data);
+
+	unsigned i;
+	for(i = 0; i < data_length; ++i) {
+		linked_list_prepend(list, &data[i]);
+	}
+
+	linked_list_node *node;
+	for(i = data_length-1, node = linked_list_head(list); node != NULL; --i, node = node->next) {
+		TEST_ASSERT_EQUAL_INT(data[i], *(int*)node->data);
+	}
+}
+
+void test_prepend_dynamic() {
+	int data_length = 6;
+	int *data = (int *) malloc(sizeof(int) * data_length);
+
+	for(int i = 0; i < data_length; i++) {
+		data[i] = i * 100;
+	}
 
 	unsigned i;
 	for(i = 0; i < data_length; ++i) {
@@ -106,7 +152,7 @@ void test_remove_first_end() {
 
 void test_remove_string() {
 	linked_list *list_str = safe_malloc(sizeof(linked_list));
-	linked_list_init(list_str, (linked_list_comparator)strcmp);
+	linked_list_init(list_str, (linked_list_comparator)strcmp, (destructor) NULL);
 
 	char *data_before[] = {"babak", "sean", "liu", "someone else"};
 	char *data_after[] = {"babak", "liu", "someone else"};
@@ -127,4 +173,7 @@ void test_remove_string() {
 void tearDown() {
 	linked_list_free(list);
 	safe_free(list);
+
+	linked_list_free(dynamic_list);
+	safe_free(dynamic_list);
 }
