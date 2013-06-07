@@ -3,11 +3,18 @@
 
 #include <unity.h>
 
+#include <string.h>
+
 static linked_list *list;
+
+int intp_equal(const int *l, const int *r) {
+	// Need to return 0 for equality, anything else for inequality.
+	return *l - *r;
+}
 
 void setUp() {
 	list = safe_malloc(sizeof(linked_list));
-	linked_list_init(list);
+	linked_list_init(list, (linked_list_comparator)intp_equal);
 }
 
 void test_empty_list() {
@@ -52,7 +59,8 @@ void test_remove_first_beginning() {
 		linked_list_append(list, &data_before[i]);
 	}
 
-	linked_list_remove_first(list, &data_before[0]);
+	int to_remove = 23;
+	linked_list_remove_first(list, &to_remove);
 
 	linked_list_node *node;
 	for(i = 0, node = linked_list_head(list); node; ++i, node = node->next) {
@@ -69,7 +77,8 @@ void test_remove_first_middle() {
 		linked_list_append(list, &data_before[i]);
 	}
 
-	linked_list_remove_first(list, &data_before[4]);
+	int to_remove = 131;
+	linked_list_remove_first(list, &to_remove);
 
 	linked_list_node *node;
 	for(i = 0, node = linked_list_head(list); node; ++i, node = node->next) {
@@ -86,11 +95,32 @@ void test_remove_first_end() {
 		linked_list_append(list, &data_before[i]);
 	}
 
-	linked_list_remove_first(list, &data_before[5]);
+	int to_remove = -13;
+	linked_list_remove_first(list, &to_remove);
 
 	linked_list_node *node;
 	for(i = 0, node = linked_list_head(list); node; ++i, node = node->next) {
 		TEST_ASSERT_EQUAL_INT(data_after[i], *(int*)node->data);
+	}
+}
+
+void test_remove_string() {
+	linked_list *list_str = safe_malloc(sizeof(linked_list));
+	linked_list_init(list_str, (linked_list_comparator)strcmp);
+
+	char *data_before[] = {"babak", "sean", "liu", "someone else"};
+	char *data_after[] = {"babak", "liu", "someone else"};
+
+	unsigned i;
+	for(i = 0; i < sizeof(data_before) / sizeof(*data_before); ++i) {
+		linked_list_append(list, data_before[i]);
+	}
+
+	linked_list_remove_first(list, "sean");
+
+	linked_list_node *node;
+	for(i = 0, node = linked_list_head(list); node; ++i, node = node->next) {
+		TEST_ASSERT_EQUAL_STRING(data_after[i], (char*)node->data);
 	}
 }
 
