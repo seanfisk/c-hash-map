@@ -12,7 +12,7 @@
 ## Code
 
 * Pass in free function
-* Remove from linked list
+* Add comparator function to linked_list
 * Remove from hash map
 
 ### Optimizations
