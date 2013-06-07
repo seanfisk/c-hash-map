@@ -1,5 +1,7 @@
 # Hash Map in C
 
+[![Build Status](https://travis-ci.org/seanfisk/c-hash-map.png)](https://travis-ci.org/seanfisk/c-hash-map)
+
 This is a practice hash map in C, written to understand hash maps more deeply.
 
 ## Goals
