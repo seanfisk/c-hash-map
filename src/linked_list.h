@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 
+typedef int (*linked_list_comparator)(const void *l, const void *r);
+
 typedef struct linked_list_node_tag {
 	struct linked_list_node_tag *next;
 	void *data;
@@ -10,10 +12,11 @@ typedef struct linked_list_node_tag {
 
 typedef struct {
 	linked_list_node *head;
+	linked_list_comparator comparator;
 } linked_list;
 
 /* Linked list operations */
-void linked_list_init(linked_list *list);
+void linked_list_init(linked_list *list, linked_list_comparator comparator);
 linked_list_node *linked_list_head(linked_list *list);
 void linked_list_append(linked_list *list, void *data);
 void linked_list_prepend(linked_list *list, void *data);

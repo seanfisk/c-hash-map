@@ -4,7 +4,8 @@
 
 /* Linked list operations */
 
-void linked_list_init(linked_list *list) {
+void linked_list_init(linked_list *list, linked_list_comparator comparator) {
+	list->comparator = comparator;
 	// Allocate a sentinel node
 	linked_list_node *sentinel = safe_malloc(sizeof(linked_list_node));
 	sentinel->next = NULL;
@@ -38,7 +39,7 @@ void linked_list_remove_first(linked_list *list, void *data) {
 	linked_list_node *current_node = previous_node->next;
 	while(true) {
 		// Is the first node a match?
-		if(current_node->data == data) {
+		if(list->comparator(current_node->data, data) == 0) {
 			previous_node->next = current_node->next;
 			safe_free(current_node);
 			return;
