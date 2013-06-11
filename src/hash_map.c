@@ -47,7 +47,9 @@ void hash_map_free(hash_map *map) {
 		}
 	}
 
-	free(map);
+	safe_free(map->table);
+
+	safe_free(map);
 }
 
 void *hash_map_get(hash_map *map, void *key) {
@@ -77,7 +79,7 @@ void hash_map_set(hash_map *map, void *key, void *value) {
 
 	if (!list) {
 		list = (linked_list *) safe_malloc(sizeof(linked_list));
-		linked_list_init(list, map->comparator, (destructor) NULL);
+		linked_list_init(list, map->comparator, (destructor) safe_free);
 		map->table[map->hash_func(key, map->capacity)] = list;
 	}
 
@@ -102,3 +104,4 @@ void hash_map_set(hash_map *map, void *key, void *value) {
 	// or else insert new one
 	linked_list_prepend(list, pair);
 }
+

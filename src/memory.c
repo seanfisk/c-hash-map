@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#ifdef TEST
+int __malloc_counter = 0;
+#endif
+
 void *safe_malloc(size_t size) {
 	void *ptr = malloc(size);
 
@@ -11,10 +15,19 @@ void *safe_malloc(size_t size) {
 		exit(1);
 	}
 
+#ifdef TEST
+	//printf("malloc: %p\n", ptr);
+	__malloc_counter++;
+#endif
+
 	return ptr;
 }
 
 void safe_free(void *ptr ) {
 	free(ptr);
+#ifdef TEST
+	__malloc_counter--;
+	//printf("free: %p\n", ptr);
+#endif
 }
 

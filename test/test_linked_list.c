@@ -20,7 +20,7 @@ void setUp() {
 	linked_list_init(list, (linked_list_comparator) intp_equal, (destructor) NULL);
 
 	dynamic_list = safe_malloc(sizeof(linked_list));
-	linked_list_init(dynamic_list, (linked_list_comparator) intp_equal, (destructor) free);
+	linked_list_init(dynamic_list, (linked_list_comparator) intp_equal, (destructor) safe_free);
 }
 
 void test_empty_list() {
@@ -44,7 +44,7 @@ void test_append() {
 
 void test_append_dynamic() {
 	int data_length = 6;
-	int *data = (int *) malloc(sizeof(int) * data_length);
+	int *data = (int *) safe_malloc(sizeof(int) * data_length);
 
 	for(int i = 0; i < data_length; i++) {
 		data[i] = i * 100;
@@ -79,7 +79,7 @@ void test_prepend() {
 
 void test_prepend_dynamic() {
 	int data_length = 6;
-	int *data = (int *) malloc(sizeof(int) * data_length);
+	int *data = (int *) safe_malloc(sizeof(int) * data_length);
 
 	for(int i = 0; i < data_length; i++) {
 		data[i] = i * 100;
@@ -172,8 +172,6 @@ void test_remove_string() {
 
 void tearDown() {
 	linked_list_free(list);
-	safe_free(list);
-
 	linked_list_free(dynamic_list);
-	safe_free(dynamic_list);
 }
+

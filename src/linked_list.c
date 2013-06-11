@@ -70,4 +70,6 @@ void linked_list_free(linked_list *list) {
 	}
 
 	list->head = NULL;
+
+	safe_free(list);
 }

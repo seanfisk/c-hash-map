@@ -10,6 +10,8 @@
 
 static hash_map *map;
 
+extern int __malloc_counter;
+
 void setUp() {
 	map = safe_malloc(sizeof(hash_map));
 	hash_map_init(map, 1000, (hash_map_comparator) strcmp, NULL);
@@ -19,13 +21,13 @@ void test_set_get() {
 	hash_map_set(map, "key", "value");
 	TEST_ASSERT_EQUAL_STRING("value", (char *) hash_map_get(map, "key"));
 
-	hash_map_set(map, "key", "value2");
+	/*hash_map_set(map, "key", "value2");
 	TEST_ASSERT_EQUAL_STRING("value2", (char *) hash_map_get(map, "key"));
 
 	hash_map_set(map, "key2", "value3");
-	TEST_ASSERT_EQUAL_STRING("value3", (char *) hash_map_get(map, "key2"));
+	TEST_ASSERT_EQUAL_STRING("value3", (char *) hash_map_get(map, "key2"));*/
 }
-
+/*
 void test_get_invalid_key() {
 	TEST_ASSERT_NULL(hash_map_get(map, "invalid_key"));
 }
@@ -51,8 +53,10 @@ void test_collision() {
 	TEST_ASSERT_EQUAL_STRING("9090", hash_map_get(map, "1234567890"));
 	TEST_ASSERT_EQUAL_STRING("0909", hash_map_get(map, "1234567809"));
 }
-
+*/
 void tearDown() {
 	hash_map_free(map);
+
+	TEST_ASSERT_EQUAL_INT(0, __malloc_counter);
 }
 
