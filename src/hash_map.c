@@ -83,10 +83,6 @@ void hash_map_set(hash_map *map, void *key, void *value) {
 		map->table[map->hash_func(key, map->capacity)] = list;
 	}
 
-	hash_map_pair *pair = (hash_map_pair *) safe_malloc(sizeof(hash_map_pair));
-	pair->key = key;
-	pair->value = value;
-
 	linked_list_node *head = linked_list_head(list);
 
 	while (head) {
@@ -102,6 +98,11 @@ void hash_map_set(hash_map *map, void *key, void *value) {
 	}
 
 	// or else insert new one
+
+	hash_map_pair *pair = (hash_map_pair *) safe_malloc(sizeof(hash_map_pair));
+	pair->key = key;
+	pair->value = value;
+
 	linked_list_prepend(list, pair);
 }
 

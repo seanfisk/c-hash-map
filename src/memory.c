@@ -16,18 +16,18 @@ void *safe_malloc(size_t size) {
 	}
 
 #ifdef TEST
-	//printf("malloc: %p\n", ptr);
+	//printf("malloc: %p, counter: %d\n", ptr, __malloc_counter);
 	__malloc_counter++;
 #endif
 
 	return ptr;
 }
 
-void safe_free(void *ptr ) {
+void safe_free(void *ptr) {
 	free(ptr);
 #ifdef TEST
 	__malloc_counter--;
-	//printf("free: %p\n", ptr);
+	//printf("free: %p, counter: %d\n", ptr, __malloc_counter);
 #endif
 }
 
