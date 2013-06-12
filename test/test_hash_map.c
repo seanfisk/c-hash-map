@@ -10,6 +10,8 @@
 
 static hash_map *map;
 
+extern int __malloc_counter;
+
 void setUp() {
 	map = safe_malloc(sizeof(hash_map));
 	hash_map_init(map, 1000, (hash_map_comparator) strcmp, NULL);
@@ -54,5 +56,7 @@ void test_collision() {
 
 void tearDown() {
 	hash_map_free(map);
+
+	TEST_ASSERT_EQUAL_INT(0, __malloc_counter);
 }
 

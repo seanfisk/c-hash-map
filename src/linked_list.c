@@ -69,5 +69,9 @@ void linked_list_free(linked_list *list) {
 		current_node = previous_node->next;
 	}
 
+	safe_free(previous_node);
+
 	list->head = NULL;
+
+	safe_free(list);
 }
