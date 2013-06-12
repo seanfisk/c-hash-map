@@ -47,7 +47,9 @@ void hash_map_free(hash_map *map) {
 		}
 	}
 
-	free(map);
+	safe_free(map->table);
+
+	safe_free(map);
 }
 
 void *hash_map_get(hash_map *map, void *key) {
@@ -77,13 +79,9 @@ void hash_map_set(hash_map *map, void *key, void *value) {
 
 	if (!list) {
 		list = (linked_list *) safe_malloc(sizeof(linked_list));
-		linked_list_init(list, map->comparator, (destructor) NULL);
+		linked_list_init(list, map->comparator, (destructor) safe_free);
 		map->table[map->hash_func(key, map->capacity)] = list;
 	}
-
-	hash_map_pair *pair = (hash_map_pair *) safe_malloc(sizeof(hash_map_pair));
-	pair->key = key;
-	pair->value = value;
 
 	linked_list_node *head = linked_list_head(list);
 
@@ -100,5 +98,11 @@ void hash_map_set(hash_map *map, void *key, void *value) {
 	}
 
 	// or else insert new one
+
+	hash_map_pair *pair = (hash_map_pair *) safe_malloc(sizeof(hash_map_pair));
+	pair->key = key;
+	pair->value = value;
+
 	linked_list_prepend(list, pair);
 }
+

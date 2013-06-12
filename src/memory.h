@@ -8,6 +8,10 @@
 
 #include <stddef.h>
 
+#ifdef TEST
+extern int __malloc_counter;
+#endif
+
 /**
  * Allocate memory while exiting on failure. Also used to count
  * references during testing. All code could call this instead of
