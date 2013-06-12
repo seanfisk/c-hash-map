@@ -17,10 +17,10 @@ int intp_equal(const int *l, const int *r) {
 void setUp() {
 	list = safe_malloc(sizeof(linked_list));
 
-	linked_list_init(list, (linked_list_comparator) intp_equal, (destructor) NULL);
+	linked_list_init(list, (linked_list_comparator) intp_equal, (linked_list_destructor) NULL);
 
 	dynamic_list = safe_malloc(sizeof(linked_list));
-	linked_list_init(dynamic_list, (linked_list_comparator) intp_equal, (destructor) safe_free);
+	linked_list_init(dynamic_list, (linked_list_comparator) intp_equal, (linked_list_destructor) safe_free);
 }
 
 void test_empty_list() {
@@ -75,7 +75,7 @@ void test_prepend() {
 
 void test_prepend_dynamic() {
 	int data_length = 6;
-	
+
 	int i;
 	for(i = 0; i < data_length; ++i) {
 		int *data = (int *) safe_malloc(sizeof(int));
@@ -145,7 +145,7 @@ void test_remove_first_end() {
 
 void test_remove_string() {
 	linked_list *list_str = safe_malloc(sizeof(linked_list));
-	linked_list_init(list_str, (linked_list_comparator)strcmp, (destructor) NULL);
+	linked_list_init(list_str, (linked_list_comparator)strcmp, (linked_list_destructor) NULL);
 
 	char *data_before[] = {"babak", "sean", "liu", "someone else"};
 	char *data_after[] = {"babak", "liu", "someone else"};
@@ -171,4 +171,3 @@ void tearDown() {
 
 	TEST_ASSERT_EQUAL_INT(0, __malloc_counter);
 }
-

@@ -6,10 +6,10 @@
 #ifndef HASH_MAP_H
 #define HASH_MAP_H
 
+#include "linked_list.h"
+
 #include <stdlib.h>
 #include <stdint.h>
-
-#include "linked_list.h"
 
 /**
  * Comparator function to determine whether `*l` and `*r` are equal.
@@ -81,4 +81,4 @@ void *hash_map_get(hash_map *map, void *key);
  */
 void hash_map_set(hash_map *map, void *key, void *value);
 
-#endif // HASH_MAP_H
+#endif

@@ -30,4 +30,3 @@ void safe_free(void *ptr) {
 	//printf("free: %p, counter: %d\n", ptr, __malloc_counter);
 #endif
 }
-

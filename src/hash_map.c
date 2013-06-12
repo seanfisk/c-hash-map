@@ -10,7 +10,7 @@
 
 // when "-g" is used redefine inline to static or else the linker will try to link the function and fail (since it's inline)
 #ifdef TEST
-	#define inline static
+#define inline static
 #endif
 
 inline int hash_map_default_comparator(const void *l, const void *r) {
@@ -79,7 +79,7 @@ void hash_map_set(hash_map *map, void *key, void *value) {
 
 	if (!list) {
 		list = (linked_list *) safe_malloc(sizeof(linked_list));
-		linked_list_init(list, map->comparator, (destructor) safe_free);
+		linked_list_init(list, map->comparator, (linked_list_destructor) safe_free);
 		map->table[map->hash_func(key, map->capacity)] = list;
 	}
 
@@ -105,4 +105,3 @@ void hash_map_set(hash_map *map, void *key, void *value) {
 
 	linked_list_prepend(list, pair);
 }
-
