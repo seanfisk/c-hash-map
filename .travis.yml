@@ -1,4 +1,4 @@
 language: c
 compiler: clang
 install: "bundle install"
-script: "bundle exec rake test:all"
+script: "bundle exec rake test:everything"

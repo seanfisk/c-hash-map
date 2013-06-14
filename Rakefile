@@ -16,4 +16,16 @@ task :doc do
   check_system 'doxygen'
 end
 
-task default: 'test:all'
+desc 'Check the style using astyle'
+task :style do
+  puts 'Style check'
+  puts
+  check_system 'scripts/astyle_check.bash'
+end
+
+namespace :test do
+  desc 'Run style check and unit tests'
+  task everything: [:style, 'test:all'] {}
+end
+
+task default: 'test:everything'

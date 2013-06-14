@@ -60,7 +60,7 @@ void linked_list_free(linked_list *list) {
 
 	while(current_node != NULL) {
 		if(list->free_data != NULL) {
-		    list->free_data(current_node->data);
+			list->free_data(current_node->data);
 		}
 		safe_free(previous_node);
 		previous_node = current_node;
