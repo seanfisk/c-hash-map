@@ -7,10 +7,24 @@ require 'rubocop'
 PROJECT_CEEDLING_ROOT = 'vendor/ceedling'
 load "#{PROJECT_CEEDLING_ROOT}/lib/rakefile.rb"
 
+# Helper functions
+
 def check_system(*args)
   system(*args)
   exit $CHILD_STATUS.exitstatus if $CHILD_STATUS != 0
 end
+
+def git_current_branch
+  branches = `git branch`
+  all_branches = branches.lines()
+  current_branch = ''
+  all_branches.each do |b|
+    current_branch = b.split(' ')[1] if b.start_with? '*'
+  end
+  return current_branch
+end
+
+# Tasks
 
 desc 'Build documentation with Doxygen'
 task :doc do
@@ -47,6 +61,24 @@ namespace :test do
   task everything: ['c:style', 'ruby:style', 'test:all'] do
     # nothing
   end
+end
+
+desc 'Upload current documentation to github-pages'
+task :upload do
+    current_branch = git_current_branch()
+    puts 'rake doc...'
+    check_system 'rake', 'doc'
+    puts 'git checkout gh-pages...'
+    check_system 'git', 'checkout', 'gh-pages'
+    puts 'cp -r doc/html/* . ...'
+    `cp -r doc/html/* .`
+    puts 'git add . ...'
+    check_system 'git', 'add', '.'
+    puts 'git commit -m "new documentation uploaded to github-pages" ...'
+    `git commit -m "new documentation uploaded to github-pages"`
+    cmd = 'git checkout ' + current_branch
+    puts cmd
+    `#{cmd}`
 end
 
 task default: 'test:everything'
