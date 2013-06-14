@@ -1,0 +1,69 @@
+\hypertarget{memory_8h}{\section{src/memory.h File Reference}
+\label{memory_8h}\index{src/memory.\-h@{src/memory.\-h}}
+}
+
+
+Memory allocation and de-\/allocation wrappers.  
+
+
+{\ttfamily \#include $<$stddef.\-h$>$}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void $\ast$ \hyperlink{memory_8h_ac26280b92f7122e6f76a0407d26ae8e7}{safe\-\_\-malloc} (size\-\_\-t size)
+\begin{DoxyCompactList}\small\item\em Allocate memory while exiting on failure. \end{DoxyCompactList}\item 
+void \hyperlink{memory_8h_a9ef6aec758f591315c6ece6256a12c1b}{safe\-\_\-free} (void $\ast$ptr)
+\begin{DoxyCompactList}\small\item\em Pass-\/thru call to free. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Memory allocation and de-\/allocation wrappers. 
+
+Definition in file \hyperlink{memory_8h_source}{memory.\-h}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{memory_8h_a9ef6aec758f591315c6ece6256a12c1b}{\index{memory.\-h@{memory.\-h}!safe\-\_\-free@{safe\-\_\-free}}
+\index{safe\-\_\-free@{safe\-\_\-free}!memory.h@{memory.\-h}}
+\subsubsection[{safe\-\_\-free}]{\setlength{\rightskip}{0pt plus 5cm}void safe\-\_\-free (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{ptr}
+\end{DoxyParamCaption}
+)}}\label{memory_8h_a9ef6aec758f591315c6ece6256a12c1b}
+
+
+Pass-\/thru call to free. 
+
+Also used to count references during testing. All code should call this instead of {\ttfamily free}. 
+\begin{DoxyParams}{Parameters}
+{\em ptr} & pointer to de-\/allocate \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 26 of file memory.\-c.
+
+\hypertarget{memory_8h_ac26280b92f7122e6f76a0407d26ae8e7}{\index{memory.\-h@{memory.\-h}!safe\-\_\-malloc@{safe\-\_\-malloc}}
+\index{safe\-\_\-malloc@{safe\-\_\-malloc}!memory.h@{memory.\-h}}
+\subsubsection[{safe\-\_\-malloc}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ safe\-\_\-malloc (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{size}
+\end{DoxyParamCaption}
+)}}\label{memory_8h_ac26280b92f7122e6f76a0407d26ae8e7}
+
+
+Allocate memory while exiting on failure. 
+
+Also used to count references during testing. All code could call this instead of {\ttfamily malloc}. 
+\begin{DoxyParams}{Parameters}
+{\em size} & amount of memory to allocate \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+pointer to allocated memory 
+\end{DoxyReturn}
+
+
+Definition at line 10 of file memory.\-c.
+

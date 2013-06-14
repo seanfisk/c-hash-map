@@ -1,0 +1,168 @@
+.TH "src/hash_map.h" 3 "Thu Jun 13 2013" "Version 0.1" "C Hash Map" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/hash_map.h \- 
+.PP
+Simple hash map implementation\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <stdint\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBhash_map\fP"
+.br
+.RI "\fIHash map object\&. \fP"
+.ti -1c
+.RI "struct \fBhash_map_pair\fP"
+.br
+.RI "\fIKey/value pair\&. \fP"
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef int(* \fBhash_map_comparator\fP )(const void *l, const void *r)"
+.br
+.RI "\fIComparator function to determine whether \fC*l\fP and \fC*r\fP are equal\&. \fP"
+.ti -1c
+.RI "typedef size_t(* \fBhash_map_hash_func\fP )(const void *key, size_t capacity)"
+.br
+.RI "\fIHash function\&. \fP"
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBhash_map_init\fP (\fBhash_map\fP *map, size_t capacity, \fBhash_map_comparator\fP comparator, \fBhash_map_hash_func\fP hash_func)"
+.br
+.RI "\fIInitialize the hash map\&. \fP"
+.ti -1c
+.RI "void \fBhash_map_free\fP (\fBhash_map\fP *map)"
+.br
+.RI "\fIFree the hash map\&. \fP"
+.ti -1c
+.RI "void * \fBhash_map_get\fP (\fBhash_map\fP *map, void *key)"
+.br
+.RI "\fIGet the value for the given key\&. \fP"
+.ti -1c
+.RI "void \fBhash_map_set\fP (\fBhash_map\fP *map, void *key, void *value)"
+.br
+.RI "\fIInsert the value into the map\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Simple hash map implementation\&. 
+
+
+.PP
+Definition in file \fBhash_map\&.h\fP\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef int(* hash_map_comparator)(const void *l, const void *r)"
+
+.PP
+Comparator function to determine whether \fC*l\fP and \fC*r\fP are equal\&. \fBReturns:\fP
+.RS 4
+Negative if \fC*l\fP is less than \fC*r\fP; zero if \fC*l\fP is equal to \fC*r\fP; positive if \fC*l\fP is greater than \fC*r\fP\&. 
+.RE
+.PP
+
+.PP
+Definition at line 18 of file hash_map\&.h\&.
+.SS "typedef size_t(* hash_map_hash_func)(const void *key, size_t capacity)"
+
+.PP
+Hash function\&. \fBParameters:\fP
+.RS 4
+\fIkey\fP key to hash 
+.br
+\fIcapacity\fP maximum size of the map 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+an offset within the range \fC[0, capacity)\fP 
+.RE
+.PP
+
+.PP
+Definition at line 26 of file hash_map\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "void hash_map_free (\fBhash_map\fP *map)"
+
+.PP
+Free the hash map\&. This function will also free the table of internal linked lists\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fImap\fP hash map structure 
+.RE
+.PP
+
+.PP
+Definition at line 43 of file hash_map\&.c\&.
+.SS "void* hash_map_get (\fBhash_map\fP *map, void *key)"
+
+.PP
+Get the value for the given key\&. \fBParameters:\fP
+.RS 4
+\fImap\fP hash map structure 
+.br
+\fIkey\fP key for value to fetch 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+pointer to the value 
+.RE
+.PP
+
+.PP
+Definition at line 55 of file hash_map\&.c\&.
+.SS "void hash_map_init (\fBhash_map\fP *map, size_tcapacity, \fBhash_map_comparator\fPcomparator, \fBhash_map_hash_func\fPhash_func)"
+
+.PP
+Initialize the hash map\&. \fBParameters:\fP
+.RS 4
+\fImap\fP hash map structure 
+.br
+\fIcapacity\fP maximum size of the hash map 
+.br
+\fIcomparator\fP key comparator function 
+.br
+\fIhash_func\fP key hash function 
+.RE
+.PP
+
+.PP
+Definition at line 24 of file hash_map\&.c\&.
+.SS "void hash_map_set (\fBhash_map\fP *map, void *key, void *value)"
+
+.PP
+Insert the value into the map\&. \fBParameters:\fP
+.RS 4
+\fImap\fP hash map structure 
+.br
+\fIkey\fP key associated with value 
+.br
+\fIvalue\fP value associated with key 
+.RE
+.PP
+
+.PP
+Definition at line 77 of file hash_map\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for C Hash Map from the source code\&.

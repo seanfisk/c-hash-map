@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>C Hash Map: Main Page</title>
+<title>C Hash Map: linked_list_node Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -38,8 +38,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
-      <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -59,7 +59,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
-</div><!-- top -->
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
+      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
+    </ul>
+  </div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -74,33 +80,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
+</div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">C Hash Map Documentation</div>  </div>
+<div class="title">linked_list_node Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><div class="image">
-<img src="https://travis-ci.org/seanfisk/c-hash-map.png"  alt="Build Status"/>
-</div>
-<p> <a href="https://travis-ci.org/seanfisk/c-hash-map">Travis-CI Build Status</a></p>
-<p>This is a practice hash map in C, written to understand hash maps more deeply.</p>
-<h2>Goals</h2>
-<ul>
-<li>Version control (git)</li>
-<li>Test-driven development (throw the switch)</li>
-<li>Documentation (doxygen)</li>
-<li>Build system (throw the switch)</li>
-<li>Consistent style (?)</li>
-<li>Continuous integration (Travis-CI)</li>
-<li>Benchmarks</li>
+
+<p>Linked list node structure.  
+ <a href="structlinked__list__node.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="linked__list_8h_source.html">linked_list.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:a2faa44c9514ef0a3440d7567d6096661"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2faa44c9514ef0a3440d7567d6096661"></a>
+struct _linked_list_node *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlinked__list__node.html#a2faa44c9514ef0a3440d7567d6096661">next</a></td></tr>
+<tr class="memdesc:a2faa44c9514ef0a3440d7567d6096661"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the next node. <br/></td></tr>
+<tr class="separator:a2faa44c9514ef0a3440d7567d6096661"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95b8e30599d7df461a38c765e20fcb69"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a95b8e30599d7df461a38c765e20fcb69"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlinked__list__node.html#a95b8e30599d7df461a38c765e20fcb69">data</a></td></tr>
+<tr class="memdesc:a95b8e30599d7df461a38c765e20fcb69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to data. <br/></td></tr>
+<tr class="separator:a95b8e30599d7df461a38c765e20fcb69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Linked list node structure. </p>
+
+<p>Definition at line <a class="el" href="linked__list_8h_source.html#l00029">29</a> of file <a class="el" href="linked__list_8h_source.html">linked_list.h</a>.</p>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
+<li>src/<a class="el" href="linked__list_8h_source.html">linked_list.h</a></li>
 </ul>
-<h2>Authors</h2>
-<ul>
-<li>Babak Behzad</li>
-<li>Liu</li>
-<li>Sean Fisk </li>
-</ul>
-</div></div><!-- contents -->
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated on Thu Jun 13 2013 21:24:52 for C Hash Map by &#160;<a href="http://www.doxygen.org/index.html">

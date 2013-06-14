@@ -1,0 +1,188 @@
+.TH "src/linked_list.h" 3 "Thu Jun 13 2013" "Version 0.1" "C Hash Map" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/linked_list.h \- 
+.PP
+Simple linked list implementation\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdbool\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBlinked_list_node\fP"
+.br
+.RI "\fILinked list node structure\&. \fP"
+.ti -1c
+.RI "struct \fBlinked_list\fP"
+.br
+.RI "\fILinked list object\&. \fP"
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef int(* \fBlinked_list_comparator\fP )(const void *l, const void *r)"
+.br
+.RI "\fIComparator function to determine whether \fC*l\fP and \fC*r\fP are equal\&. \fP"
+.ti -1c
+.RI "typedef void(* \fBlinked_list_destructor\fP )(const void *data)"
+.br
+.RI "\fIFunction to deallocate data pointers\&. \fP"
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBlinked_list_init\fP (\fBlinked_list\fP *list, \fBlinked_list_comparator\fP comparator, \fBlinked_list_destructor\fP free_list)"
+.br
+.RI "\fIInitialize a linked list\&. \fP"
+.ti -1c
+.RI "\fBlinked_list_node\fP * \fBlinked_list_head\fP (\fBlinked_list\fP *list)"
+.br
+.RI "\fIGet the first linked list node\&. \fP"
+.ti -1c
+.RI "void \fBlinked_list_append\fP (\fBlinked_list\fP *list, void *data)"
+.br
+.RI "\fIAppend data to the list\&. \fP"
+.ti -1c
+.RI "void \fBlinked_list_prepend\fP (\fBlinked_list\fP *list, void *data)"
+.br
+.RI "\fIPrepend data to the list\&. \fP"
+.ti -1c
+.RI "void \fBlinked_list_remove_first\fP (\fBlinked_list\fP *list, void *data)"
+.br
+.RI "\fIRemove the first matching piece of data from the list\&. \fP"
+.ti -1c
+.RI "void \fBlinked_list_free\fP (\fBlinked_list\fP *list)"
+.br
+.RI "\fIFree the linked list and all its nodes and data\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Simple linked list implementation\&. 
+
+
+.PP
+Definition in file \fBlinked_list\&.h\fP\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef int(* linked_list_comparator)(const void *l, const void *r)"
+
+.PP
+Comparator function to determine whether \fC*l\fP and \fC*r\fP are equal\&. \fBReturns:\fP
+.RS 4
+.IP "\(bu" 2
+negative if \fC*l\fP is less than \fC*r\fP
+.IP "\(bu" 2
+zero if \fC*l\fP is equal to \fC*r\fP
+.IP "\(bu" 2
+positive if \fC*l\fP is greater than \fC*r\fP 
+.PP
+.RE
+.PP
+
+.PP
+Definition at line 18 of file linked_list\&.h\&.
+.SS "typedef void(* linked_list_destructor)(const void *data)"
+
+.PP
+Function to deallocate data pointers\&. For automatically allocated memory, pass in \fCNULL\fP to call nothing\&. For memory allocated with \fCmalloc\fP, pass in \fCfree\fP\&. 
+.PP
+Definition at line 24 of file linked_list\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "void linked_list_append (\fBlinked_list\fP *list, void *data)"
+
+.PP
+Append data to the list\&. \fBParameters:\fP
+.RS 4
+\fIlist\fP linked list structure 
+.br
+\fIdata\fP data to append 
+.RE
+.PP
+
+.PP
+Definition at line 19 of file linked_list\&.c\&.
+.SS "void linked_list_free (\fBlinked_list\fP *list)"
+
+.PP
+Free the linked list and all its nodes and data\&. Uses \fBlinked_list_destructor\fP function passed to \fBlinked_list_init\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlist\fP linked list structure 
+.RE
+.PP
+
+.PP
+Definition at line 57 of file linked_list\&.c\&.
+.SS "\fBlinked_list_node\fP* linked_list_head (\fBlinked_list\fP *list)"
+
+.PP
+Get the first linked list node\&. \fBParameters:\fP
+.RS 4
+\fIlist\fP linked list structure 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+first linked list node 
+.RE
+.PP
+
+.PP
+Definition at line 15 of file linked_list\&.c\&.
+.SS "void linked_list_init (\fBlinked_list\fP *list, \fBlinked_list_comparator\fPcomparator, \fBlinked_list_destructor\fPfree_list)"
+
+.PP
+Initialize a linked list\&. \fBParameters:\fP
+.RS 4
+\fIlist\fP linked list structure 
+.br
+\fIcomparator\fP data comparator function 
+.br
+\fIfree_list\fP data de-allocation function 
+.RE
+.PP
+
+.PP
+Definition at line 5 of file linked_list\&.c\&.
+.SS "void linked_list_prepend (\fBlinked_list\fP *list, void *data)"
+
+.PP
+Prepend data to the list\&. \fBParameters:\fP
+.RS 4
+\fIlist\fP linked list structure 
+.br
+\fIdata\fP data to prepend 
+.RE
+.PP
+
+.PP
+Definition at line 30 of file linked_list\&.c\&.
+.SS "void linked_list_remove_first (\fBlinked_list\fP *list, void *data)"
+
+.PP
+Remove the first matching piece of data from the list\&. Uses the \fBlinked_list_comparator\fP function passed to \fBlinked_list_init\fP\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlist\fP linked list structure 
+.br
+\fIdata\fP data to remove 
+.RE
+.PP
+
+.PP
+Definition at line 37 of file linked_list\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for C Hash Map from the source code\&.

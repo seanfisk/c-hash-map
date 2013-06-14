@@ -1,0 +1,40 @@
+---
+:source:
+  :path: test
+  :file: test_linked_list.c
+:successes:
+- :test: test_empty_list
+  :line: 26
+  :message: ''
+- :test: test_append
+  :line: 31
+  :message: ''
+- :test: test_append_dynamic
+  :line: 45
+  :message: ''
+- :test: test_prepend
+  :line: 61
+  :message: ''
+- :test: test_prepend_dynamic
+  :line: 76
+  :message: ''
+- :test: test_remove_first_beginning
+  :line: 92
+  :message: ''
+- :test: test_remove_first_middle
+  :line: 110
+  :message: ''
+- :test: test_remove_first_end
+  :line: 128
+  :message: ''
+- :test: test_remove_string
+  :line: 146
+  :message: ''
+:failures: []
+:ignores: []
+:counts:
+  :total: 9
+  :passed: 9
+  :failed: 0
+  :ignored: 0
+:stdout: []

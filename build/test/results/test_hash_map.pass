@@ -1,0 +1,25 @@
+---
+:source:
+  :path: test
+  :file: test_hash_map.c
+:successes:
+- :test: test_set_get
+  :line: 20
+  :message: ''
+- :test: test_get_invalid_key
+  :line: 31
+  :message: ''
+- :test: test_default_hash_func
+  :line: 35
+  :message: ''
+- :test: test_collision
+  :line: 48
+  :message: ''
+:failures: []
+:ignores: []
+:counts:
+  :total: 4
+  :passed: 4
+  :failed: 0
+  :ignored: 0
+:stdout: []

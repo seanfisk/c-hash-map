@@ -1,0 +1,221 @@
+\hypertarget{linked__list_8h}{\section{src/linked\-\_\-list.h File Reference}
+\label{linked__list_8h}\index{src/linked\-\_\-list.\-h@{src/linked\-\_\-list.\-h}}
+}
+
+
+Simple linked list implementation.  
+
+
+{\ttfamily \#include $<$stdbool.\-h$>$}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structlinked__list__node}{linked\-\_\-list\-\_\-node}
+\begin{DoxyCompactList}\small\item\em Linked list node structure. \end{DoxyCompactList}\item 
+struct \hyperlink{structlinked__list}{linked\-\_\-list}
+\begin{DoxyCompactList}\small\item\em Linked list object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef int($\ast$ \hyperlink{linked__list_8h_a116cfa57c3ae173378b3a3b7a6a92ac7}{linked\-\_\-list\-\_\-comparator} )(const void $\ast$l, const void $\ast$r)
+\begin{DoxyCompactList}\small\item\em Comparator function to determine whether {\ttfamily $\ast$l} and {\ttfamily $\ast$r} are equal. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{linked__list_8h_aae34433038e7836e8570c4937ae328b9}{linked\-\_\-list\-\_\-destructor} )(const void $\ast$data)
+\begin{DoxyCompactList}\small\item\em Function to deallocate data pointers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{linked__list_8h_a7d09d606db01b57631b93e848e8d9a14}{linked\-\_\-list\-\_\-init} (\hyperlink{structlinked__list}{linked\-\_\-list} $\ast$list, \hyperlink{linked__list_8h_a116cfa57c3ae173378b3a3b7a6a92ac7}{linked\-\_\-list\-\_\-comparator} comparator, \hyperlink{linked__list_8h_aae34433038e7836e8570c4937ae328b9}{linked\-\_\-list\-\_\-destructor} free\-\_\-list)
+\begin{DoxyCompactList}\small\item\em Initialize a linked list. \end{DoxyCompactList}\item 
+\hyperlink{structlinked__list__node}{linked\-\_\-list\-\_\-node} $\ast$ \hyperlink{linked__list_8h_ae50b128ad2dd741990907a053bbef475}{linked\-\_\-list\-\_\-head} (\hyperlink{structlinked__list}{linked\-\_\-list} $\ast$list)
+\begin{DoxyCompactList}\small\item\em Get the first linked list node. \end{DoxyCompactList}\item 
+void \hyperlink{linked__list_8h_a7a34dcbfbb8faf63919f024606f3e22b}{linked\-\_\-list\-\_\-append} (\hyperlink{structlinked__list}{linked\-\_\-list} $\ast$list, void $\ast$data)
+\begin{DoxyCompactList}\small\item\em Append data to the list. \end{DoxyCompactList}\item 
+void \hyperlink{linked__list_8h_a1063329e06e7cfc004496c5a39912470}{linked\-\_\-list\-\_\-prepend} (\hyperlink{structlinked__list}{linked\-\_\-list} $\ast$list, void $\ast$data)
+\begin{DoxyCompactList}\small\item\em Prepend data to the list. \end{DoxyCompactList}\item 
+void \hyperlink{linked__list_8h_a437c167d15b7b119902e60c68d1c74f9}{linked\-\_\-list\-\_\-remove\-\_\-first} (\hyperlink{structlinked__list}{linked\-\_\-list} $\ast$list, void $\ast$data)
+\begin{DoxyCompactList}\small\item\em Remove the first matching piece of data from the list. \end{DoxyCompactList}\item 
+void \hyperlink{linked__list_8h_aacd1bb99f8db915d571ccad8db53d4cf}{linked\-\_\-list\-\_\-free} (\hyperlink{structlinked__list}{linked\-\_\-list} $\ast$list)
+\begin{DoxyCompactList}\small\item\em Free the linked list and all its nodes and data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Simple linked list implementation. 
+
+Definition in file \hyperlink{linked__list_8h_source}{linked\-\_\-list.\-h}.
+
+
+
+\subsection{Typedef Documentation}
+\hypertarget{linked__list_8h_a116cfa57c3ae173378b3a3b7a6a92ac7}{\index{linked\-\_\-list.\-h@{linked\-\_\-list.\-h}!linked\-\_\-list\-\_\-comparator@{linked\-\_\-list\-\_\-comparator}}
+\index{linked\-\_\-list\-\_\-comparator@{linked\-\_\-list\-\_\-comparator}!linked_list.h@{linked\-\_\-list.\-h}}
+\subsubsection[{linked\-\_\-list\-\_\-comparator}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ linked\-\_\-list\-\_\-comparator)(const void $\ast$l, const void $\ast$r)}}\label{linked__list_8h_a116cfa57c3ae173378b3a3b7a6a92ac7}
+
+
+Comparator function to determine whether {\ttfamily $\ast$l} and {\ttfamily $\ast$r} are equal. 
+
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item negative if {\ttfamily $\ast$l} is less than {\ttfamily $\ast$r}
+\item zero if {\ttfamily $\ast$l} is equal to {\ttfamily $\ast$r}
+\item positive if {\ttfamily $\ast$l} is greater than {\ttfamily $\ast$r} 
+\end{DoxyItemize}
+\end{DoxyReturn}
+
+
+Definition at line 18 of file linked\-\_\-list.\-h.
+
+\hypertarget{linked__list_8h_aae34433038e7836e8570c4937ae328b9}{\index{linked\-\_\-list.\-h@{linked\-\_\-list.\-h}!linked\-\_\-list\-\_\-destructor@{linked\-\_\-list\-\_\-destructor}}
+\index{linked\-\_\-list\-\_\-destructor@{linked\-\_\-list\-\_\-destructor}!linked_list.h@{linked\-\_\-list.\-h}}
+\subsubsection[{linked\-\_\-list\-\_\-destructor}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ linked\-\_\-list\-\_\-destructor)(const void $\ast$data)}}\label{linked__list_8h_aae34433038e7836e8570c4937ae328b9}
+
+
+Function to deallocate data pointers. 
+
+For automatically allocated memory, pass in {\ttfamily N\-U\-L\-L} to call nothing. For memory allocated with {\ttfamily malloc}, pass in {\ttfamily free}. 
+
+Definition at line 24 of file linked\-\_\-list.\-h.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{linked__list_8h_a7a34dcbfbb8faf63919f024606f3e22b}{\index{linked\-\_\-list.\-h@{linked\-\_\-list.\-h}!linked\-\_\-list\-\_\-append@{linked\-\_\-list\-\_\-append}}
+\index{linked\-\_\-list\-\_\-append@{linked\-\_\-list\-\_\-append}!linked_list.h@{linked\-\_\-list.\-h}}
+\subsubsection[{linked\-\_\-list\-\_\-append}]{\setlength{\rightskip}{0pt plus 5cm}void linked\-\_\-list\-\_\-append (
+\begin{DoxyParamCaption}
+\item[{{\bf linked\-\_\-list} $\ast$}]{list, }
+\item[{void $\ast$}]{data}
+\end{DoxyParamCaption}
+)}}\label{linked__list_8h_a7a34dcbfbb8faf63919f024606f3e22b}
+
+
+Append data to the list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & linked list structure \\
+\hline
+{\em data} & data to append \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 19 of file linked\-\_\-list.\-c.
+
+\hypertarget{linked__list_8h_aacd1bb99f8db915d571ccad8db53d4cf}{\index{linked\-\_\-list.\-h@{linked\-\_\-list.\-h}!linked\-\_\-list\-\_\-free@{linked\-\_\-list\-\_\-free}}
+\index{linked\-\_\-list\-\_\-free@{linked\-\_\-list\-\_\-free}!linked_list.h@{linked\-\_\-list.\-h}}
+\subsubsection[{linked\-\_\-list\-\_\-free}]{\setlength{\rightskip}{0pt plus 5cm}void linked\-\_\-list\-\_\-free (
+\begin{DoxyParamCaption}
+\item[{{\bf linked\-\_\-list} $\ast$}]{list}
+\end{DoxyParamCaption}
+)}}\label{linked__list_8h_aacd1bb99f8db915d571ccad8db53d4cf}
+
+
+Free the linked list and all its nodes and data. 
+
+Uses \hyperlink{linked__list_8h_aae34433038e7836e8570c4937ae328b9}{linked\-\_\-list\-\_\-destructor} function passed to \hyperlink{linked__list_8h_a7d09d606db01b57631b93e848e8d9a14}{linked\-\_\-list\-\_\-init} 
+\begin{DoxyParams}{Parameters}
+{\em list} & linked list structure \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 57 of file linked\-\_\-list.\-c.
+
+\hypertarget{linked__list_8h_ae50b128ad2dd741990907a053bbef475}{\index{linked\-\_\-list.\-h@{linked\-\_\-list.\-h}!linked\-\_\-list\-\_\-head@{linked\-\_\-list\-\_\-head}}
+\index{linked\-\_\-list\-\_\-head@{linked\-\_\-list\-\_\-head}!linked_list.h@{linked\-\_\-list.\-h}}
+\subsubsection[{linked\-\_\-list\-\_\-head}]{\setlength{\rightskip}{0pt plus 5cm}{\bf linked\-\_\-list\-\_\-node}$\ast$ linked\-\_\-list\-\_\-head (
+\begin{DoxyParamCaption}
+\item[{{\bf linked\-\_\-list} $\ast$}]{list}
+\end{DoxyParamCaption}
+)}}\label{linked__list_8h_ae50b128ad2dd741990907a053bbef475}
+
+
+Get the first linked list node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & linked list structure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+first linked list node 
+\end{DoxyReturn}
+
+
+Definition at line 15 of file linked\-\_\-list.\-c.
+
+\hypertarget{linked__list_8h_a7d09d606db01b57631b93e848e8d9a14}{\index{linked\-\_\-list.\-h@{linked\-\_\-list.\-h}!linked\-\_\-list\-\_\-init@{linked\-\_\-list\-\_\-init}}
+\index{linked\-\_\-list\-\_\-init@{linked\-\_\-list\-\_\-init}!linked_list.h@{linked\-\_\-list.\-h}}
+\subsubsection[{linked\-\_\-list\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void linked\-\_\-list\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{{\bf linked\-\_\-list} $\ast$}]{list, }
+\item[{{\bf linked\-\_\-list\-\_\-comparator}}]{comparator, }
+\item[{{\bf linked\-\_\-list\-\_\-destructor}}]{free\-\_\-list}
+\end{DoxyParamCaption}
+)}}\label{linked__list_8h_a7d09d606db01b57631b93e848e8d9a14}
+
+
+Initialize a linked list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & linked list structure \\
+\hline
+{\em comparator} & data comparator function \\
+\hline
+{\em free\-\_\-list} & data de-\/allocation function \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 5 of file linked\-\_\-list.\-c.
+
+\hypertarget{linked__list_8h_a1063329e06e7cfc004496c5a39912470}{\index{linked\-\_\-list.\-h@{linked\-\_\-list.\-h}!linked\-\_\-list\-\_\-prepend@{linked\-\_\-list\-\_\-prepend}}
+\index{linked\-\_\-list\-\_\-prepend@{linked\-\_\-list\-\_\-prepend}!linked_list.h@{linked\-\_\-list.\-h}}
+\subsubsection[{linked\-\_\-list\-\_\-prepend}]{\setlength{\rightskip}{0pt plus 5cm}void linked\-\_\-list\-\_\-prepend (
+\begin{DoxyParamCaption}
+\item[{{\bf linked\-\_\-list} $\ast$}]{list, }
+\item[{void $\ast$}]{data}
+\end{DoxyParamCaption}
+)}}\label{linked__list_8h_a1063329e06e7cfc004496c5a39912470}
+
+
+Prepend data to the list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & linked list structure \\
+\hline
+{\em data} & data to prepend \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 30 of file linked\-\_\-list.\-c.
+
+\hypertarget{linked__list_8h_a437c167d15b7b119902e60c68d1c74f9}{\index{linked\-\_\-list.\-h@{linked\-\_\-list.\-h}!linked\-\_\-list\-\_\-remove\-\_\-first@{linked\-\_\-list\-\_\-remove\-\_\-first}}
+\index{linked\-\_\-list\-\_\-remove\-\_\-first@{linked\-\_\-list\-\_\-remove\-\_\-first}!linked_list.h@{linked\-\_\-list.\-h}}
+\subsubsection[{linked\-\_\-list\-\_\-remove\-\_\-first}]{\setlength{\rightskip}{0pt plus 5cm}void linked\-\_\-list\-\_\-remove\-\_\-first (
+\begin{DoxyParamCaption}
+\item[{{\bf linked\-\_\-list} $\ast$}]{list, }
+\item[{void $\ast$}]{data}
+\end{DoxyParamCaption}
+)}}\label{linked__list_8h_a437c167d15b7b119902e60c68d1c74f9}
+
+
+Remove the first matching piece of data from the list. 
+
+Uses the \hyperlink{linked__list_8h_a116cfa57c3ae173378b3a3b7a6a92ac7}{linked\-\_\-list\-\_\-comparator} function passed to \hyperlink{linked__list_8h_a7d09d606db01b57631b93e848e8d9a14}{linked\-\_\-list\-\_\-init}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & linked list structure \\
+\hline
+{\em data} & data to remove \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 37 of file linked\-\_\-list.\-c.
+

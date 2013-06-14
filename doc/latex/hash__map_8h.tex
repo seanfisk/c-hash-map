@@ -1,0 +1,185 @@
+\hypertarget{hash__map_8h}{\section{src/hash\-\_\-map.h File Reference}
+\label{hash__map_8h}\index{src/hash\-\_\-map.\-h@{src/hash\-\_\-map.\-h}}
+}
+
+
+Simple hash map implementation.  
+
+
+{\ttfamily \#include \char`\"{}linked\-\_\-list.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$stdint.\-h$>$}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structhash__map}{hash\-\_\-map}
+\begin{DoxyCompactList}\small\item\em Hash map object. \end{DoxyCompactList}\item 
+struct \hyperlink{structhash__map__pair}{hash\-\_\-map\-\_\-pair}
+\begin{DoxyCompactList}\small\item\em Key/value pair. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef int($\ast$ \hyperlink{hash__map_8h_a9b3733ab5963e04230bbc06ac9a0049c}{hash\-\_\-map\-\_\-comparator} )(const void $\ast$l, const void $\ast$r)
+\begin{DoxyCompactList}\small\item\em Comparator function to determine whether {\ttfamily $\ast$l} and {\ttfamily $\ast$r} are equal. \end{DoxyCompactList}\item 
+typedef size\-\_\-t($\ast$ \hyperlink{hash__map_8h_a21a2d0b47caed184ebeb9ab21fe4e4b2}{hash\-\_\-map\-\_\-hash\-\_\-func} )(const void $\ast$key, size\-\_\-t capacity)
+\begin{DoxyCompactList}\small\item\em Hash function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{hash__map_8h_a5b12e8fc9b55130ad3f8470360dcebe7}{hash\-\_\-map\-\_\-init} (\hyperlink{structhash__map}{hash\-\_\-map} $\ast$map, size\-\_\-t capacity, \hyperlink{hash__map_8h_a9b3733ab5963e04230bbc06ac9a0049c}{hash\-\_\-map\-\_\-comparator} comparator, \hyperlink{hash__map_8h_a21a2d0b47caed184ebeb9ab21fe4e4b2}{hash\-\_\-map\-\_\-hash\-\_\-func} hash\-\_\-func)
+\begin{DoxyCompactList}\small\item\em Initialize the hash map. \end{DoxyCompactList}\item 
+void \hyperlink{hash__map_8h_a1819cae55a631514b2c9cd55608ba1e2}{hash\-\_\-map\-\_\-free} (\hyperlink{structhash__map}{hash\-\_\-map} $\ast$map)
+\begin{DoxyCompactList}\small\item\em Free the hash map. \end{DoxyCompactList}\item 
+void $\ast$ \hyperlink{hash__map_8h_a3f3eed009b03610388eaf48327dc0608}{hash\-\_\-map\-\_\-get} (\hyperlink{structhash__map}{hash\-\_\-map} $\ast$map, void $\ast$key)
+\begin{DoxyCompactList}\small\item\em Get the value for the given key. \end{DoxyCompactList}\item 
+void \hyperlink{hash__map_8h_aa9fc8cf32e0ce60904d07d060afbf50b}{hash\-\_\-map\-\_\-set} (\hyperlink{structhash__map}{hash\-\_\-map} $\ast$map, void $\ast$key, void $\ast$value)
+\begin{DoxyCompactList}\small\item\em Insert the value into the map. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Simple hash map implementation. 
+
+Definition in file \hyperlink{hash__map_8h_source}{hash\-\_\-map.\-h}.
+
+
+
+\subsection{Typedef Documentation}
+\hypertarget{hash__map_8h_a9b3733ab5963e04230bbc06ac9a0049c}{\index{hash\-\_\-map.\-h@{hash\-\_\-map.\-h}!hash\-\_\-map\-\_\-comparator@{hash\-\_\-map\-\_\-comparator}}
+\index{hash\-\_\-map\-\_\-comparator@{hash\-\_\-map\-\_\-comparator}!hash_map.h@{hash\-\_\-map.\-h}}
+\subsubsection[{hash\-\_\-map\-\_\-comparator}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ hash\-\_\-map\-\_\-comparator)(const void $\ast$l, const void $\ast$r)}}\label{hash__map_8h_a9b3733ab5963e04230bbc06ac9a0049c}
+
+
+Comparator function to determine whether {\ttfamily $\ast$l} and {\ttfamily $\ast$r} are equal. 
+
+\begin{DoxyReturn}{Returns}
+Negative if {\ttfamily $\ast$l} is less than {\ttfamily $\ast$r}; zero if {\ttfamily $\ast$l} is equal to {\ttfamily $\ast$r}; positive if {\ttfamily $\ast$l} is greater than {\ttfamily $\ast$r}. 
+\end{DoxyReturn}
+
+
+Definition at line 18 of file hash\-\_\-map.\-h.
+
+\hypertarget{hash__map_8h_a21a2d0b47caed184ebeb9ab21fe4e4b2}{\index{hash\-\_\-map.\-h@{hash\-\_\-map.\-h}!hash\-\_\-map\-\_\-hash\-\_\-func@{hash\-\_\-map\-\_\-hash\-\_\-func}}
+\index{hash\-\_\-map\-\_\-hash\-\_\-func@{hash\-\_\-map\-\_\-hash\-\_\-func}!hash_map.h@{hash\-\_\-map.\-h}}
+\subsubsection[{hash\-\_\-map\-\_\-hash\-\_\-func}]{\setlength{\rightskip}{0pt plus 5cm}typedef size\-\_\-t($\ast$ hash\-\_\-map\-\_\-hash\-\_\-func)(const void $\ast$key, size\-\_\-t capacity)}}\label{hash__map_8h_a21a2d0b47caed184ebeb9ab21fe4e4b2}
+
+
+Hash function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & key to hash \\
+\hline
+{\em capacity} & maximum size of the map \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+an offset within the range {\ttfamily \mbox{[}0, capacity)} 
+\end{DoxyReturn}
+
+
+Definition at line 26 of file hash\-\_\-map.\-h.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{hash__map_8h_a1819cae55a631514b2c9cd55608ba1e2}{\index{hash\-\_\-map.\-h@{hash\-\_\-map.\-h}!hash\-\_\-map\-\_\-free@{hash\-\_\-map\-\_\-free}}
+\index{hash\-\_\-map\-\_\-free@{hash\-\_\-map\-\_\-free}!hash_map.h@{hash\-\_\-map.\-h}}
+\subsubsection[{hash\-\_\-map\-\_\-free}]{\setlength{\rightskip}{0pt plus 5cm}void hash\-\_\-map\-\_\-free (
+\begin{DoxyParamCaption}
+\item[{{\bf hash\-\_\-map} $\ast$}]{map}
+\end{DoxyParamCaption}
+)}}\label{hash__map_8h_a1819cae55a631514b2c9cd55608ba1e2}
+
+
+Free the hash map. 
+
+This function will also free the table of internal linked lists. 
+\begin{DoxyParams}{Parameters}
+{\em map} & hash map structure \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 43 of file hash\-\_\-map.\-c.
+
+\hypertarget{hash__map_8h_a3f3eed009b03610388eaf48327dc0608}{\index{hash\-\_\-map.\-h@{hash\-\_\-map.\-h}!hash\-\_\-map\-\_\-get@{hash\-\_\-map\-\_\-get}}
+\index{hash\-\_\-map\-\_\-get@{hash\-\_\-map\-\_\-get}!hash_map.h@{hash\-\_\-map.\-h}}
+\subsubsection[{hash\-\_\-map\-\_\-get}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ hash\-\_\-map\-\_\-get (
+\begin{DoxyParamCaption}
+\item[{{\bf hash\-\_\-map} $\ast$}]{map, }
+\item[{void $\ast$}]{key}
+\end{DoxyParamCaption}
+)}}\label{hash__map_8h_a3f3eed009b03610388eaf48327dc0608}
+
+
+Get the value for the given key. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em map} & hash map structure \\
+\hline
+{\em key} & key for value to fetch \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+pointer to the value 
+\end{DoxyReturn}
+
+
+Definition at line 55 of file hash\-\_\-map.\-c.
+
+\hypertarget{hash__map_8h_a5b12e8fc9b55130ad3f8470360dcebe7}{\index{hash\-\_\-map.\-h@{hash\-\_\-map.\-h}!hash\-\_\-map\-\_\-init@{hash\-\_\-map\-\_\-init}}
+\index{hash\-\_\-map\-\_\-init@{hash\-\_\-map\-\_\-init}!hash_map.h@{hash\-\_\-map.\-h}}
+\subsubsection[{hash\-\_\-map\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void hash\-\_\-map\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{{\bf hash\-\_\-map} $\ast$}]{map, }
+\item[{size\-\_\-t}]{capacity, }
+\item[{{\bf hash\-\_\-map\-\_\-comparator}}]{comparator, }
+\item[{{\bf hash\-\_\-map\-\_\-hash\-\_\-func}}]{hash\-\_\-func}
+\end{DoxyParamCaption}
+)}}\label{hash__map_8h_a5b12e8fc9b55130ad3f8470360dcebe7}
+
+
+Initialize the hash map. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em map} & hash map structure \\
+\hline
+{\em capacity} & maximum size of the hash map \\
+\hline
+{\em comparator} & key comparator function \\
+\hline
+{\em hash\-\_\-func} & key hash function \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 24 of file hash\-\_\-map.\-c.
+
+\hypertarget{hash__map_8h_aa9fc8cf32e0ce60904d07d060afbf50b}{\index{hash\-\_\-map.\-h@{hash\-\_\-map.\-h}!hash\-\_\-map\-\_\-set@{hash\-\_\-map\-\_\-set}}
+\index{hash\-\_\-map\-\_\-set@{hash\-\_\-map\-\_\-set}!hash_map.h@{hash\-\_\-map.\-h}}
+\subsubsection[{hash\-\_\-map\-\_\-set}]{\setlength{\rightskip}{0pt plus 5cm}void hash\-\_\-map\-\_\-set (
+\begin{DoxyParamCaption}
+\item[{{\bf hash\-\_\-map} $\ast$}]{map, }
+\item[{void $\ast$}]{key, }
+\item[{void $\ast$}]{value}
+\end{DoxyParamCaption}
+)}}\label{hash__map_8h_aa9fc8cf32e0ce60904d07d060afbf50b}
+
+
+Insert the value into the map. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em map} & hash map structure \\
+\hline
+{\em key} & key associated with value \\
+\hline
+{\em value} & value associated with key \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 77 of file hash\-\_\-map.\-c.
+

@@ -1,0 +1,69 @@
+.TH "src/memory.h" 3 "Thu Jun 13 2013" "Version 0.1" "C Hash Map" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/memory.h \- 
+.PP
+Memory allocation and de-allocation wrappers\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stddef\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void * \fBsafe_malloc\fP (size_t size)"
+.br
+.RI "\fIAllocate memory while exiting on failure\&. \fP"
+.ti -1c
+.RI "void \fBsafe_free\fP (void *ptr)"
+.br
+.RI "\fIPass-thru call to free\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Memory allocation and de-allocation wrappers\&. 
+
+
+.PP
+Definition in file \fBmemory\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "void safe_free (void *ptr)"
+
+.PP
+Pass-thru call to free\&. Also used to count references during testing\&. All code should call this instead of \fCfree\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIptr\fP pointer to de-allocate 
+.RE
+.PP
+
+.PP
+Definition at line 26 of file memory\&.c\&.
+.SS "void* safe_malloc (size_tsize)"
+
+.PP
+Allocate memory while exiting on failure\&. Also used to count references during testing\&. All code could call this instead of \fCmalloc\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsize\fP amount of memory to allocate 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+pointer to allocated memory 
+.RE
+.PP
+
+.PP
+Definition at line 10 of file memory\&.c\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for C Hash Map from the source code\&.
