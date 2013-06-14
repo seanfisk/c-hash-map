@@ -1,4 +1,7 @@
 language: c
 compiler: clang
-install: "bundle install"
-script: "bundle exec rake test:everything"
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq astyle
+install: bundle install
+script: bundle exec rake test:everything
