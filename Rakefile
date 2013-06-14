@@ -43,7 +43,7 @@ task :upload do
     check_system 'git add .'
     puts 'git commit -m "new documentation uploaded to github-pages"'
     check_system 'git commit -m "new documentation uploaded to github-pages"'
-    cmd = 'git checkout ' + current_branch
+    cmd = "git checkout " + current_branch
     puts cmd
     `#{cmd}`
 end
