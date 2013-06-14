@@ -45,5 +45,5 @@ task :upload do
     check_system 'git commit -m "new documentation uploaded to github-pages"'
     cmd = 'git checkout ' + current_branch
     puts cmd
-    check_system 'cmd'
+    `cmd`
 end
