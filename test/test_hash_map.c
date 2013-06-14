@@ -37,11 +37,11 @@ void test_default_hash_func() {
 
 	// these two should collide because of the %
 	TEST_ASSERT_EQUAL_UINT(map->hash_func(&i1, map->capacity),
-							map->hash_func(&i2, map->capacity));
+	                       map->hash_func(&i2, map->capacity));
 
 	// these two hash obtained by default hash_func should be equal (since the first 8-byte is the same)
 	TEST_ASSERT_EQUAL_UINT(map->hash_func("1234567890", map->capacity),
-							map->hash_func("1234567809", map->capacity));
+	                       map->hash_func("1234567809", map->capacity));
 
 }
 
