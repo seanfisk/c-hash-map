@@ -15,6 +15,10 @@ for file in "${ASTYLE_FILES[@]}"; do
 	fi
 done
 
+if $success; then
+	echo 'No astyle checker errors'
+fi
+
 # $success will call either the `true' or `false' shell builtins, and
 # we will exit with their exit code.
 exit $($success)
