@@ -33,16 +33,16 @@ end
 desc 'Upload current documentation to github-pages'
 task :upload do
     current_branch = git_current_branch()
-    puts 'rake doc'
-    check_system 'rake doc'
-    puts 'git checkout gh-pages'
-    check_system 'git checkout gh-pages'
-    puts 'cp -r doc/html/* .'
-    check_system 'cp -r doc/html/* .'
-    puts 'git add .'
-    check_system 'git add .'
-    puts 'git commit -m "new documentation uploaded to github-pages"'
-    check_system 'git commit -m "new documentation uploaded to github-pages"'
+    puts 'rake doc...'
+    check_system 'rake', 'doc'
+    puts 'git checkout gh-pages...'
+    check_system 'git', 'checkout', 'gh-pages'
+    puts 'cp -r doc/html/* . ...'
+    `cp -r doc/html/* .`
+    puts 'git add . ...'
+    check_system 'git', 'add', '.'
+    puts 'git commit -m "new documentation uploaded to github-pages" ...'
+    `git commit -m "new documentation uploaded to github-pages"`
     cmd = "git checkout " + current_branch
     puts cmd
     `#{cmd}`
