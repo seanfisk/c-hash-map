@@ -47,13 +47,14 @@ namespace :test do
 end
 
 desc 'Upload current documentation to github-pages'
-task upload: :doc do
+task :upload do
   # Credit:
   # http://stackoverflow.com/questions/6245570/get-current-branch-name
   # symbolic-ref, unlike rev-parse, will blow up when in detached HEAD
   # state, which is probably more what we want.
   current_branch = `git symbolic-ref --short HEAD`.strip()
 
+  Rake::Task['doc'].invoke
   sh 'git', 'checkout', 'gh-pages'
   FileUtils.cp_r Dir.glob('doc/html/*'), '.'
   sh 'git', 'add', '.'
