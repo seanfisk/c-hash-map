@@ -7,6 +7,7 @@
 #include "linked_list.h"
 
 #include "hash_map.h"
+#include "hash_functions.h"
 
 // when "-g" is used redefine inline to static or else the linker will try to link the function and fail (since it's inline)
 #ifdef TEST
@@ -15,10 +16,6 @@
 
 inline int hash_map_default_comparator(const void *l, const void *r) {
 	return *((unsigned long *) l) - *((unsigned long *) r);
-}
-
-inline size_t hash_map_default_hash_func(const void *key, size_t capacity) {
-	return *((size_t *) key) % capacity;
 }
 
 void hash_map_init(hash_map *map, size_t capacity, hash_map_comparator comparator, hash_map_hash_func hash_func) {

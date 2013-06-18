@@ -2,6 +2,7 @@
 #include <stdint.h>
 
 #include "hash_map.h"
+#include "hash_functions.h"
 #include "linked_list.h"
 
 #include "memory.h"
