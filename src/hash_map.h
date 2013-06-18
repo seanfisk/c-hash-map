@@ -79,6 +79,6 @@ void *hash_map_get(hash_map *map, void *key);
  * @param key key associated with value
  * @param value value associated with key
  */
-void hash_map_set(hash_map *map, void *key, void *value);
+void hash_map_put(hash_map *map, void *key, void *value);
 
 #endif

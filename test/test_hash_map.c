@@ -17,14 +17,14 @@ void setUp() {
 	hash_map_init(map, 1000, (hash_map_comparator) strcmp, NULL);
 }
 
-void test_set_get() {
-	hash_map_set(map, "key", "value");
+void test_put_get() {
+	hash_map_put(map, "key", "value");
 	TEST_ASSERT_EQUAL_STRING("value", (char *) hash_map_get(map, "key"));
 
-	hash_map_set(map, "key", "value2");
+	hash_map_put(map, "key", "value2");
 	TEST_ASSERT_EQUAL_STRING("value2", (char *) hash_map_get(map, "key"));
 
-	hash_map_set(map, "key2", "value3");
+	hash_map_put(map, "key2", "value3");
 	TEST_ASSERT_EQUAL_STRING("value3", (char *) hash_map_get(map, "key2"));
 }
 
@@ -47,8 +47,8 @@ void test_default_hash_func() {
 
 void test_collision() {
 	// these two would collide and chaining should come into play
-	hash_map_set(map, "1234567890", "9090");
-	hash_map_set(map, "1234567809", "0909");
+	hash_map_put(map, "1234567890", "9090");
+	hash_map_put(map, "1234567809", "0909");
 
 	TEST_ASSERT_EQUAL_STRING("9090", hash_map_get(map, "1234567890"));
 	TEST_ASSERT_EQUAL_STRING("0909", hash_map_get(map, "1234567809"));
