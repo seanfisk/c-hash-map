@@ -10,7 +10,7 @@ int __malloc_counter = 0;
 void *safe_malloc(size_t size) {
 	void *ptr = malloc(size);
 
-	if(!ptr) {
+	if (!ptr) {
 		fputs("out of memory", stderr);
 		exit(1);
 	}
