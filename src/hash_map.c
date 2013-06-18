@@ -74,7 +74,7 @@ void *hash_map_get(hash_map *map, void *key) {
 	return NULL;
 }
 
-void hash_map_set(hash_map *map, void *key, void *value) {
+void hash_map_put(hash_map *map, void *key, void *value) {
 	linked_list *list = map->table[map->hash_func(key, map->capacity)];
 
 	if (!list) {
