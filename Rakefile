@@ -55,7 +55,6 @@ task upload: :doc do
   current_branch = `git symbolic-ref --short HEAD`.strip()
 
   sh 'git', 'checkout', 'gh-pages'
-  # sh 'cp -r doc/html/* .'
   FileUtils.cp_r Dir.glob('doc/html/*'), '.'
   sh 'git', 'add', '.'
   # We amend so we don't add useless commits.
