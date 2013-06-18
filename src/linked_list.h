@@ -7,7 +7,7 @@
 #define LINKED_LIST_H
 
 #include <stdbool.h>
-#include <stdlib.h>
+#include <stddef.h>
 
 /**
  * Comparator function to determine whether `*l` and `*r` are equal.
