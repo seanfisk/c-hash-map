@@ -17,6 +17,25 @@ void setUp() {
 	hash_map_init(map, 1000, (hash_map_comparator) strcmp, NULL);
 }
 
+void test_size() {
+	TEST_ASSERT_EQUAL_UINT(0, hash_map_size(map));
+
+	hash_map_put(map, "key", "value");
+	TEST_ASSERT_EQUAL_UINT(1, hash_map_size(map));
+
+	hash_map_put(map, "key2", "value");
+	TEST_ASSERT_EQUAL_UINT(2, hash_map_size(map));
+
+	// if the same key was updated, size should not change
+	hash_map_put(map, "key", "value2");
+	TEST_ASSERT_EQUAL_UINT(2, hash_map_size(map));
+
+	// if hashs collide, size should still work
+	hash_map_put(map, "1234567890", "9090");
+	hash_map_put(map, "1234567809", "0909");
+	TEST_ASSERT_EQUAL_UINT(4, hash_map_size(map));
+}
+
 void test_put_get() {
 	hash_map_put(map, "key", "value");
 	TEST_ASSERT_EQUAL_STRING("value", (char *) hash_map_get(map, "key"));

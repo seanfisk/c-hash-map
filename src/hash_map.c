@@ -23,6 +23,7 @@ inline size_t hash_map_default_hash_func(const void *key, size_t capacity) {
 
 void hash_map_init(hash_map *map, size_t capacity, hash_map_comparator comparator, hash_map_hash_func hash_func) {
 	map->capacity = capacity;
+	map->size = 0;
 
 	map->table = (linked_list **) safe_malloc(sizeof(linked_list *) * map->capacity);
 	memset(map->table, 0, sizeof(linked_list *) * map->capacity);
@@ -104,4 +105,11 @@ void hash_map_put(hash_map *map, void *key, void *value) {
 	pair->value = value;
 
 	linked_list_prepend(list, pair);
+
+	map->size++;
 }
+
+size_t hash_map_size(hash_map *map) {
+	return map->size;
+}
+

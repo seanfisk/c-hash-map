@@ -165,6 +165,21 @@ void test_remove_string() {
 	linked_list_free(list_str);
 }
 
+void test_size() {
+	TEST_ASSERT_EQUAL_UINT(0, linked_list_size(list));
+
+	int data[] = { 2, 4, 5, 9 };
+	for (int i = 0; i < sizeof(data) / sizeof(*data); i++) {
+		linked_list_append(list, &data[i]);
+	}
+	TEST_ASSERT_EQUAL_UINT(4, linked_list_size(list));
+
+	for (int i = 0; i < sizeof(data) / sizeof(*data); i++) {
+		linked_list_remove_first(list, &data[i]);
+	}
+	TEST_ASSERT_EQUAL_UINT(0, linked_list_size(list));
+}
+
 void tearDown() {
 	linked_list_free(list);
 	linked_list_free(dynamic_list);
