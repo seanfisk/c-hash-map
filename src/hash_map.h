@@ -81,4 +81,11 @@ void *hash_map_get(hash_map *map, void *key);
  */
 void hash_map_put(hash_map *map, void *key, void *value);
 
+/**
+ * Remove the mapping from the map.
+ * @param map hash map structure
+ * @param key key for mapping to remove
+ */
+void hash_map_remove(hash_map *map, void *key);
+
 #endif
