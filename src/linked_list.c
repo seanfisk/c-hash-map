@@ -9,6 +9,8 @@ void linked_list_init(linked_list *list, linked_list_destructor free_data) {
 	list->head = sentinel;
 
 	list->free_data = free_data;
+
+	list->size = 0;
 }
 
 linked_list_node *linked_list_head(linked_list *list) {
@@ -24,6 +26,8 @@ void linked_list_append(linked_list *list, void *data) {
 	new_node->data = data;
 	new_node->next = NULL;
 	node->next = new_node;
+
+	list->size++;
 }
 
 void linked_list_prepend(linked_list *list, void *data) {
@@ -31,6 +35,8 @@ void linked_list_prepend(linked_list *list, void *data) {
 	new_node->data = data;
 	new_node->next = list->head->next;
 	list->head->next = new_node;
+
+	list->size++;
 }
 
 void linked_list_remove(linked_list *list, void *data) {
@@ -44,6 +50,9 @@ void linked_list_remove(linked_list *list, void *data) {
 				list->free_data(current_node->data);
 			}
 			safe_free(current_node);
+
+			list->size--;
+
 			return;
 		}
 		// Exit when we are at the end.
@@ -75,3 +84,8 @@ void linked_list_free(linked_list *list) {
 
 	safe_free(list);
 }
+
+size_t linked_list_size(linked_list *list) {
+	return list->size;
+}
+

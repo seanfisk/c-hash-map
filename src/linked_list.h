@@ -7,6 +7,7 @@
 #define LINKED_LIST_H
 
 #include <stdbool.h>
+#include <stddef.h>
 
 /**
  * Function to deallocate data pointers. For automatically allocated
@@ -33,6 +34,8 @@ typedef struct {
 	linked_list_node *head;
 	/** Function used to free data */
 	linked_list_destructor free_data;
+	/** Size of the linked_list */
+	size_t size;
 } linked_list;
 
 /**
@@ -78,5 +81,12 @@ void linked_list_remove(linked_list *list, void *data);
  * @param list linked list structure
  */
 void linked_list_free(linked_list *list);
+
+/**
+ * Returns size of the linked list.
+ * @param list linked list structure
+ * @return size of list
+ */
+size_t linked_list_size(linked_list *list);
 
 #endif
