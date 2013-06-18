@@ -74,26 +74,24 @@ void test_collision() {
 }
 
 void test_keys() {
-	linked_list *keys = hash_map_keys(map);
-	TEST_ASSERT_EQUAL_UINT(0, linked_list_size(keys));
+	char *keys[] = { "key", "keys2", "1234567890", "1234567809" };
+	char *values[] = { "value", "value2", "9090", "0909" };
 
-	hash_map_put(map, "key", "value");
-	hash_map_put(map, "key2", "value2");
-	hash_map_put(map, "1234567890", "9090");
-	hash_map_put(map, "1234567809", "0909");
+	linked_list *keys_list = hash_map_keys(map);
+	TEST_ASSERT_EQUAL_UINT(0, linked_list_size(keys_list));
 
-	keys = hash_map_keys(map);
-	TEST_ASSERT_EQUAL_UINT(4, linked_list_size(keys));
+	for (int i = 0; i < sizeof(keys) / sizeof(*keys); i++) {
+		hash_map_put(map, keys[i], values[i]);
+	}
 
-	linked_list_node *node = linked_list_head(keys);
-	TEST_ASSERT_EQUAL_STRING("key", node->data);
-	node = node->next;
-	TEST_ASSERT_EQUAL_STRING("key2", node->data);
-	node = node->next;
-	TEST_ASSERT_EQUAL_STRING("1234567890", node->data);
-	node = node->next;
-	TEST_ASSERT_EQUAL_STRING("1234567809", node->data);
-	node = node->next;
+	keys_list = hash_map_keys(map);
+	TEST_ASSERT_EQUAL_UINT(4, linked_list_size(keys_list));
+
+	linked_list_node *node = linked_list_head(keys_list);
+	for (int i = 0; i < sizeof(keys) / sizeof(*keys); i++) {
+		TEST_ASSERT_EQUAL_STRING(keys[i], node->data);
+		node = node->next;
+	}
 }
 
 void tearDown() {
