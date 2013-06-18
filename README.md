@@ -19,15 +19,15 @@ This is a practice hash map in C, written to understand hash maps more deeply.
 * Continuous integration ([Travis-CI][travis])
 * Benchmarks
 
+## Authors
+
+* Babak Behzad
+* Liu
+* Sean Fisk
+
 [git]: http://git-scm.com/
 [tts]: http://throwtheswitch.org/
 [doxygen]: http://www.stack.nl/~dimitri/doxygen/
 [astyle]: http://astyle.sourceforge.net/
 [rubocop]: https://github.com/bbatsov/rubocop
 [travis]: https://travis-ci.org/
-
-## Authors
-
-* Babak Behzad
-* Liu
-* Sean Fisk
