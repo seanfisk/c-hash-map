@@ -34,6 +34,12 @@ void test_size() {
 	hash_map_put(map, "1234567890", "9090");
 	hash_map_put(map, "1234567809", "0909");
 	TEST_ASSERT_EQUAL_UINT(4, hash_map_size(map));
+
+	hash_map_remove(map, "key");
+	hash_map_remove(map, "key2");
+	hash_map_remove(map, "1234567890");
+	hash_map_remove(map, "1234567809");
+	TEST_ASSERT_EQUAL_UINT(0, hash_map_size(map));
 }
 
 void test_put_get() {

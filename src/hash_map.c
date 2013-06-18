@@ -124,6 +124,7 @@ void hash_map_remove(hash_map *map, void *key) {
 	for(node = linked_list_head(list); node; node = node->next) {
 		if (map->comparator(((hash_map_pair*)node->data)->key, key) == 0) {
 			linked_list_remove(list, node->data);
+			map->size--;
 			break;
 		}
 	}
