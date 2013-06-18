@@ -7,28 +7,11 @@ require 'rubocop'
 PROJECT_CEEDLING_ROOT = 'vendor/ceedling'
 load "#{PROJECT_CEEDLING_ROOT}/lib/rakefile.rb"
 
-# Helper functions
-
-def check_system(*args)
-  system(*args)
-  exit $CHILD_STATUS.exitstatus if $CHILD_STATUS != 0
-end
-
-def git_current_branch
-  branches = `git branch`
-  all_branches = branches.lines()
-  current_branch = ''
-  all_branches.each do |b|
-    current_branch = b.split(' ')[1] if b.start_with? '*'
-  end
-  return current_branch
-end
-
 # Tasks
 
 desc 'Build documentation with Doxygen'
 task :doc do
-  check_system 'doxygen'
+  sh 'doxygen'
 end
 
 namespace :c do
@@ -36,7 +19,7 @@ namespace :c do
   task :style do
     puts 'Astyle check'
     puts
-    check_system 'scripts/astyle_check.bash'
+    sh 'scripts/astyle_check.bash'
   end
 end
 
@@ -64,21 +47,23 @@ namespace :test do
 end
 
 desc 'Upload current documentation to github-pages'
-task :upload do
-    current_branch = git_current_branch()
-    puts 'rake doc...'
-    check_system 'rake', 'doc'
-    puts 'git checkout gh-pages...'
-    check_system 'git', 'checkout', 'gh-pages'
-    puts 'cp -r doc/html/* . ...'
-    `cp -r doc/html/* .`
-    puts 'git add . ...'
-    check_system 'git', 'add', '.'
-    puts 'git commit -m "new documentation uploaded to github-pages" ...'
-    `git commit -m "new documentation uploaded to github-pages"`
-    cmd = 'git checkout ' + current_branch
-    puts cmd
-    `#{cmd}`
+task upload: :doc do
+  # Credit:
+  # http://stackoverflow.com/questions/6245570/get-current-branch-name
+  # symbolic-ref, unlike rev-parse, will blow up when in detached HEAD
+  # state, which is probably more what we want.
+  current_branch = `git symbolic-ref --short HEAD`.strip()
+
+  sh 'git', 'checkout', 'gh-pages'
+  # sh 'cp -r doc/html/* .'
+  FileUtils.cp_r Dir.glob('doc/html/*'), '.'
+  sh 'git', 'add', '.'
+  # We amend so we don't add useless commits.
+  sh 'git', 'commit', '--amend', '-m',
+     'new documentation uploaded to Github pages'
+  # Now that we've amended, we must force push.
+  sh 'git', 'push', '--force', 'origin', 'gh-pages'
+  sh 'git', 'checkout', current_branch
 end
 
 task default: 'test:everything'
