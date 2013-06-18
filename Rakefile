@@ -2,6 +2,7 @@
 
 require 'English' # for $CHILD_STATUS
 require 'rubocop'
+require 'tmpdir'
 
 # Load Ceedling Rake tasks
 PROJECT_CEEDLING_ROOT = 'vendor/ceedling'
@@ -53,10 +54,13 @@ task :upload do
   # symbolic-ref, unlike rev-parse, will blow up when in detached HEAD
   # state, which is probably more what we want.
   current_branch = `git symbolic-ref --short HEAD`.strip()
-
   Rake::Task['doc'].invoke
-  sh 'git', 'checkout', 'gh-pages'
-  FileUtils.cp_r Dir.glob('doc/html/*'), '.'
+
+  Dir.mktmpdir do |tmpdir|
+    FileUtils.cp_r ['README.md'] + Dir.glob('doc/html/*'), tmpdir
+    sh 'git', 'checkout', 'gh-pages'
+    FileUtils.cp_r Dir.glob("#{tmpdir}/*"), '.'
+  end
   sh 'git', 'add', '.'
   # We amend so we don't add useless commits.
   sh 'git', 'commit', '--amend', '-m',
