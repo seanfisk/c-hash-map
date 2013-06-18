@@ -31,12 +31,16 @@ typedef size_t (*hash_map_hash_func)(const void *key, size_t capacity);
 typedef struct {
 	/** Maximum size of hash table */
 	size_t capacity;
+	/** Size of hash table */
+	size_t size;
 	/** Hash table */
 	linked_list **table;
 	/** Key comparator function */
 	hash_map_comparator comparator;
 	/** Key hash function */
 	hash_map_hash_func hash_func;
+	/** Keys */
+	linked_list *keys;
 } hash_map;
 
 /**
@@ -81,4 +85,19 @@ void *hash_map_get(hash_map *map, void *key);
  */
 void hash_map_put(hash_map *map, void *key, void *value);
 
+/**
+ * Returns number of key-value pairs in the map
+ * @param map hash map structure
+ * @return size of the hash map
+ */
+size_t hash_map_size(hash_map *map);
+
+/**
+ * Returns a linked list that contains all keys in the map
+ * @param map hash map structure
+ * @return a linked list containing all keys
+ */
+linked_list *hash_map_keys(hash_map *map);
+
 #endif
+

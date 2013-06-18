@@ -23,6 +23,7 @@ inline size_t hash_map_default_hash_func(const void *key, size_t capacity) {
 
 void hash_map_init(hash_map *map, size_t capacity, hash_map_comparator comparator, hash_map_hash_func hash_func) {
 	map->capacity = capacity;
+	map->size = 0;
 
 	map->table = (linked_list **) safe_malloc(sizeof(linked_list *) * map->capacity);
 	memset(map->table, 0, sizeof(linked_list *) * map->capacity);
@@ -38,6 +39,9 @@ void hash_map_init(hash_map *map, size_t capacity, hash_map_comparator comparato
 	} else {
 		map->hash_func = hash_map_default_hash_func;
 	}
+
+	map->keys = (linked_list *) safe_malloc(sizeof(linked_list));
+	linked_list_init(map->keys, map->comparator, NULL); // no free_data func here because keys will be free'd by linked_list_free for **table
 }
 
 void hash_map_free(hash_map *map) {
@@ -46,6 +50,8 @@ void hash_map_free(hash_map *map) {
 			linked_list_free(map->table[i]);
 		}
 	}
+
+	linked_list_free(map->keys);
 
 	safe_free(map->table);
 
@@ -104,4 +110,17 @@ void hash_map_put(hash_map *map, void *key, void *value) {
 	pair->value = value;
 
 	linked_list_prepend(list, pair);
+
+	linked_list_append(map->keys, key);
+
+	map->size++;
 }
+
+size_t hash_map_size(hash_map *map) {
+	return map->size;
+}
+
+linked_list *hash_map_keys(hash_map *map) {
+	return map->keys;
+}
+
