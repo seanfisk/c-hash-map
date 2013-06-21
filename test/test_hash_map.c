@@ -88,6 +88,14 @@ void test_put_remove() {
 
 	TEST_ASSERT_NULL(hash_map_get(map, "abcd"));
 	TEST_ASSERT_NULL(hash_map_get(map, "1234"));
+
+	hash_map_put(map, "abcd", "try it again");
+	TEST_ASSERT_EQUAL_STRING("try it again", hash_map_get(map, "abcd"));
+}
+
+void test_remove_non_existent() {
+	hash_map_remove(map, "not here");
+	TEST_ASSERT_EQUAL_UINT(0, hash_map_size(map));
 }
 
 void test_keys() {

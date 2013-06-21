@@ -118,7 +118,12 @@ void hash_map_put(hash_map *map, void *key, void *value) {
 }
 
 void hash_map_remove(hash_map *map, void *key) {
-	linked_list *list = map->table[map->hash_func(key, map->capacity)];
+	size_t offset = map->hash_func(key, map->capacity);
+	linked_list *list = map->table[offset];
+
+	if (!list) {
+		return;
+	}
 
 	// The variable previous_node is set to the sentinel node, NOT the
 	// head item of the list.
