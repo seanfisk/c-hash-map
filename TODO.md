@@ -12,7 +12,6 @@
 
 * Remove from hash map
     * Remove a non-existent key
-* Make `linked_list_remove` more efficient.
 
 ### Optimizations
 
