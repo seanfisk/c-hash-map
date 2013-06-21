@@ -10,9 +10,13 @@ size_t hash_map_default_hash_func(const void *key, size_t capacity) {
 	return *((size_t *) key) % capacity;
 }
 
-unsigned char xPear16(unsigned char *x, int len) {
+unsigned char xPear16(unsigned char *x) {
 	int h, i, j;
 	unsigned char ch, hex[20]="";
+
+
+	int len = sizeof(x) / sizeof(char);
+	printf("len = %d\n", len);
 
 	// to store h values
 	struct {
