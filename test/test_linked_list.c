@@ -94,8 +94,8 @@ void test_remove_beginning() {
 	}
 
 	linked_list_node *node;
-	for(node = linked_list_head(list); node; node = node->next) {
-		if (*(int*)node->data == 23) {
+	for (node = linked_list_head(list); node; node = node->next) {
+		if (*(int *)node->data == 23) {
 			linked_list_remove(list, node->data);
 			break;
 		}
@@ -116,8 +116,8 @@ void test_remove_middle() {
 	}
 
 	linked_list_node *node;
-	for(node = linked_list_head(list); node; node = node->next) {
-		if (*(int*)node->data == 131) {
+	for (node = linked_list_head(list); node; node = node->next) {
+		if (*(int *)node->data == 131) {
 			linked_list_remove(list, node->data);
 			break;
 		}
@@ -138,8 +138,8 @@ void test_remove_end() {
 	}
 
 	linked_list_node *node;
-	for(node = linked_list_head(list); node; node = node->next) {
-		if (*(int*)node->data == -13) {
+	for (node = linked_list_head(list); node; node = node->next) {
+		if (*(int *)node->data == -13) {
 			linked_list_remove(list, node->data);
 			break;
 		}
@@ -163,7 +163,7 @@ void test_remove_str() {
 	}
 
 	linked_list_node *node;
-	for(node = linked_list_head(list); node; node = node->next) {
+	for (node = linked_list_head(list); node; node = node->next) {
 		if (strcmp(node->data, "sean") == 0) {
 			linked_list_remove(list, node->data);
 			break;
@@ -182,22 +182,22 @@ void test_remove_end_dynamic() {
 	int data_after[] = {23, -37, -83, 92, 131};
 
 	unsigned i;
-	for(i = 0; i < sizeof(data_before) / sizeof(*data_before); ++i) {
+	for (i = 0; i < sizeof(data_before) / sizeof(*data_before); ++i) {
 		int *data = safe_malloc(sizeof(int));
 		*data = data_before[i];
 		linked_list_append(dynamic_list, data);
 	}
 
 	linked_list_node *node;
-	for(node = linked_list_head(dynamic_list); node; node = node->next) {
-		if (*(int*)node->data == -13) {
+	for (node = linked_list_head(dynamic_list); node; node = node->next) {
+		if (*(int *)node->data == -13) {
 			linked_list_remove(dynamic_list, node->data);
 			break;
 		}
 	}
 
-	for(i = 0, node = linked_list_head(dynamic_list); node; ++i, node = node->next) {
-		TEST_ASSERT_EQUAL_INT(data_after[i], *(int*)node->data);
+	for (i = 0, node = linked_list_head(dynamic_list); node; ++i, node = node->next) {
+		TEST_ASSERT_EQUAL_INT(data_after[i], *(int *)node->data);
 	}
 }
 

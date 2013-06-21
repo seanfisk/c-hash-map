@@ -121,8 +121,8 @@ void hash_map_remove(hash_map *map, void *key) {
 	linked_list *list = map->table[map->hash_func(key, map->capacity)];
 
 	linked_list_node *node;
-	for(node = linked_list_head(list); node; node = node->next) {
-		if (map->comparator(((hash_map_pair*)node->data)->key, key) == 0) {
+	for (node = linked_list_head(list); node; node = node->next) {
+		if (map->comparator(((hash_map_pair *)node->data)->key, key) == 0) {
 			linked_list_remove(list, node->data);
 			map->size--;
 			break;

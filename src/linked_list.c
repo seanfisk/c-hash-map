@@ -44,7 +44,7 @@ void linked_list_remove(linked_list *list, void *data) {
 	linked_list_node *current_node = previous_node->next;
 	while (true) {
 		// Is the first node a match?
-		if(current_node->data == data) {
+		if (current_node->data == data) {
 			previous_node->next = current_node->next;
 			if (list->free_data) {
 				list->free_data(current_node->data);
