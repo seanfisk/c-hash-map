@@ -10,14 +10,6 @@
 #include <stddef.h>
 
 /**
- * Comparator function to determine whether `*l` and `*r` are equal.
- * @return
- * * negative if `*l` is less than `*r`
- * * zero if `*l` is equal to `*r`
- * * positive if `*l` is greater than `*r`
- */
-typedef int (*linked_list_comparator)(const void *l, const void *r);
-/**
  * Function to deallocate data pointers. For automatically allocated
  * memory, pass in `NULL` to call nothing. For memory allocated with
  * `malloc`, pass in `free`.
@@ -40,8 +32,6 @@ typedef struct _linked_list_node {
 typedef struct {
 	/** Pointer to sentinel node */
 	linked_list_node *head;
-	/** Comparator function used for @ref linked_list_remove_first */
-	linked_list_comparator comparator;
 	/** Function used to free data */
 	linked_list_destructor free_data;
 	/** Size of the linked_list */
@@ -54,7 +44,7 @@ typedef struct {
  * @param comparator data comparator function
  * @param free_list data de-allocation function
  */
-void linked_list_init(linked_list *list, linked_list_comparator comparator, linked_list_destructor free_list);
+void linked_list_init(linked_list *list, linked_list_destructor free_list);
 
 /**
  * Get the first linked list node.
@@ -78,14 +68,12 @@ void linked_list_append(linked_list *list, void *data);
 void linked_list_prepend(linked_list *list, void *data);
 
 /**
- * Remove the first matching piece of data from the list. Uses the
- * @ref linked_list_comparator function passed to @ref
- * linked_list_init.
+ * Remove the specified data pointer from the list.
  *
  * @param list linked list structure
- * @param data data to remove
+ * @param data data pointer
  */
-void linked_list_remove_first(linked_list *list, void *data);
+void linked_list_remove(linked_list *list, void *data);
 
 /**
  * Free the linked list and all its nodes and data. Uses @ref

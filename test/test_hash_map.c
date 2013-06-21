@@ -34,6 +34,12 @@ void test_size() {
 	hash_map_put(map, "1234567890", "9090");
 	hash_map_put(map, "1234567809", "0909");
 	TEST_ASSERT_EQUAL_UINT(4, hash_map_size(map));
+
+	hash_map_remove(map, "key");
+	hash_map_remove(map, "key2");
+	hash_map_remove(map, "1234567890");
+	hash_map_remove(map, "1234567809");
+	TEST_ASSERT_EQUAL_UINT(0, hash_map_size(map));
 }
 
 void test_put_get() {
@@ -73,6 +79,17 @@ void test_collision() {
 	TEST_ASSERT_EQUAL_STRING("0909", hash_map_get(map, "1234567809"));
 }
 
+void test_put_remove() {
+	hash_map_put(map, "abcd", "the alphabet");
+	hash_map_put(map, "1234", "some numbers");
+
+	hash_map_remove(map, "abcd");
+	hash_map_remove(map, "1234");
+
+	TEST_ASSERT_NULL(hash_map_get(map, "abcd"));
+	TEST_ASSERT_NULL(hash_map_get(map, "1234"));
+}
+
 void test_keys() {
 	char *keys[] = { "key", "keys2", "1234567890", "1234567809" };
 	char *values[] = { "value", "value2", "9090", "0909" };
@@ -97,6 +114,5 @@ void test_keys() {
 void tearDown() {
 	hash_map_free(map);
 
-	TEST_ASSERT_EQUAL_INT(0, __malloc_counter);
+	TEST_ASSERT_EQUAL_INT(__malloc_counter, 0);
 }
-

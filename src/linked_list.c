@@ -2,13 +2,12 @@
 
 #include "memory.h"
 
-void linked_list_init(linked_list *list, linked_list_comparator comparator, linked_list_destructor free_data) {
+void linked_list_init(linked_list *list, linked_list_destructor free_data) {
 	// Allocate a sentinel node
 	linked_list_node *sentinel = safe_malloc(sizeof(linked_list_node));
 	sentinel->next = NULL;
 	list->head = sentinel;
 
-	list->comparator = comparator;
 	list->free_data = free_data;
 
 	list->size = 0;
@@ -40,13 +39,16 @@ void linked_list_prepend(linked_list *list, void *data) {
 	list->size++;
 }
 
-void linked_list_remove_first(linked_list *list, void *data) {
+void linked_list_remove(linked_list *list, void *data) {
 	linked_list_node *previous_node = list->head;
 	linked_list_node *current_node = previous_node->next;
 	while (true) {
 		// Is the first node a match?
-		if (list->comparator(current_node->data, data) == 0) {
+		if (current_node->data == data) {
 			previous_node->next = current_node->next;
+			if (list->free_data) {
+				list->free_data(current_node->data);
+			}
 			safe_free(current_node);
 
 			list->size--;
@@ -86,4 +88,3 @@ void linked_list_free(linked_list *list) {
 size_t linked_list_size(linked_list *list) {
 	return list->size;
 }
-
