@@ -4,4 +4,7 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq astyle
 install: bundle install
-script: bundle exec rake test:everything
+env:
+  - CEEDLING_MAIN_PROJECT_FILE=project.yml
+  - CEEDLING_MAIN_PROJECT_FILE=gcc.yml
+script: bundle exec rake verbosity[4] test:everything

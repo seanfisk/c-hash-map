@@ -1,4 +1,6 @@
-# Compiler: LLVM Clang
+# Compiler: GCC
+
+# Since we can't use rake options:* to configure our compiler (because it just doesn't work), we maintain another copy of the configuration file and run `CEEDLING_MAIN_PROJECT_FILE=gcc.yml rake test:everything'.
 
 :project:
   :use_exceptions: FALSE
@@ -50,8 +52,8 @@
 
 :tools:
   :test_compiler:
-    :executable: clang
-    :name: Clang
+    :executable: gcc
+    :name: GCC
     :arguments:
       - -DTEST
       - -I"$": COLLECTION_PATHS_TEST_SUPPORT_SOURCE_INCLUDE_VENDOR
@@ -60,15 +62,15 @@
       - -g # add debugging symbols
       - -std=c99
   :test_linker:
-    :executable: clang
-    :name: Clang
+    :executable: gcc
+    :name: GCC
     :arguments:
       - -DTEST
       - ${1} # list of object files to link
       - -o ${2} # executable file output
   :test_file_preprocessor:
-    :executable: clang
-    :name: Clang
+    :executable: gcc
+    :name: GCC
     :arguments:
       - -E
       - -DTEST
@@ -76,25 +78,25 @@
       - ${1} # source code input files
       - -o ${2} # object file output
   :test_dependencies_generator:
-    :executable: clang
-    :name: Clang
+    :executable: gcc
+    :name: GCC
   :release_compiler:
-    :executable: clang
-    :name: Clang
+    :executable: gcc
+    :name: GCC
     :arguments:
       - -I"$": COLLECTION_PATHS_RELEASE_TOOLCHAIN_INCLUDE
       - -c ${1} # source code input file
       - -o ${2} # object file output
       - -std=c99
   :release_linker:
-    :executable: clang
-    :name: Clang
+    :executable: gcc
+    :name: GCC
     :arguments:
       - ${1} # list of object files to link
       - -o ${2} # executable file output
   :release_dependencies_generator:
-    :executable: clang
-    :name: Clang
+    :executable: gcc
+    :name: GCC
 
 :plugins:
   :load_paths:
