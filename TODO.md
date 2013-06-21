@@ -8,6 +8,9 @@
 
 ## Code
 
+* `clear()`
+* `containsKey(key)`
+
 ### Optimizations
 
 * Resize the hash table
