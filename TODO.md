@@ -8,9 +8,6 @@
 
 ## Code
 
-* Remove from hash map
-    * Remove a non-existent key
-
 ### Optimizations
 
 * Resize the hash table
