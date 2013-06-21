@@ -19,7 +19,7 @@ linked_list_node *linked_list_head(linked_list *list) {
 
 void linked_list_append(linked_list *list, void *data) {
 	linked_list_node *node = list->head;
-	while(node->next) {
+	while (node->next) {
 		node = node->next;
 	}
 	linked_list_node *new_node = safe_malloc(sizeof(linked_list_node));
@@ -42,7 +42,7 @@ void linked_list_prepend(linked_list *list, void *data) {
 void linked_list_remove(linked_list *list, void *data) {
 	linked_list_node *previous_node = list->head;
 	linked_list_node *current_node = previous_node->next;
-	while(true) {
+	while (true) {
 		// Is the first node a match?
 		if(current_node->data == data) {
 			previous_node->next = current_node->next;
@@ -56,7 +56,7 @@ void linked_list_remove(linked_list *list, void *data) {
 			return;
 		}
 		// Exit when we are at the end.
-		if(current_node->next == NULL) {
+		if (current_node->next == NULL) {
 			break;
 		}
 		// Increment
@@ -69,8 +69,8 @@ void linked_list_free(linked_list *list) {
 	linked_list_node *previous_node = list->head;
 	linked_list_node *current_node = previous_node->next;
 
-	while(current_node != NULL) {
-		if(list->free_data != NULL) {
+	while (current_node != NULL) {
+		if (list->free_data != NULL) {
 			list->free_data(current_node->data);
 		}
 		safe_free(previous_node);
@@ -88,4 +88,3 @@ void linked_list_free(linked_list *list) {
 size_t linked_list_size(linked_list *list) {
 	return list->size;
 }
-
