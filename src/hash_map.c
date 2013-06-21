@@ -118,12 +118,21 @@ void hash_map_put(hash_map *map, void *key, void *value) {
 }
 
 void hash_map_remove(hash_map *map, void *key) {
-	linked_list *list = map->table[map->hash_func(key, map->capacity)];
+	size_t offset = map->hash_func(key, map->capacity);
+	linked_list *list = map->table[offset];
+
+	if (!list) {
+		return;
+	}
 
 	linked_list_node *node;
 	for (node = linked_list_head(list); node; node = node->next) {
 		if (map->comparator(((hash_map_pair *)node->data)->key, key) == 0) {
 			linked_list_remove(list, node->data);
+			if (!linked_list_size(list)) {
+				linked_list_free(list);
+				map->table[offset] = NULL;
+			}
 			map->size--;
 			break;
 		}
