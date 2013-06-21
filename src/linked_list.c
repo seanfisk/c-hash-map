@@ -39,32 +39,6 @@ void linked_list_prepend(linked_list *list, void *data) {
 	list->size++;
 }
 
-void linked_list_remove(linked_list *list, void *data) {
-	linked_list_node *previous_node = list->head;
-	linked_list_node *current_node = previous_node->next;
-	while (true) {
-		// Is the first node a match?
-		if (current_node->data == data) {
-			previous_node->next = current_node->next;
-			if (list->free_data) {
-				list->free_data(current_node->data);
-			}
-			safe_free(current_node);
-
-			list->size--;
-
-			return;
-		}
-		// Exit when we are at the end.
-		if (current_node->next == NULL) {
-			break;
-		}
-		// Increment
-		previous_node = current_node;
-		current_node = current_node->next;
-	}
-}
-
 void linked_list_free(linked_list *list) {
 	linked_list_node *previous_node = list->head;
 	linked_list_node *current_node = previous_node->next;

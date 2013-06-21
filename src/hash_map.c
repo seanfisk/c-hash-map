@@ -120,13 +120,31 @@ void hash_map_put(hash_map *map, void *key, void *value) {
 void hash_map_remove(hash_map *map, void *key) {
 	linked_list *list = map->table[map->hash_func(key, map->capacity)];
 
-	linked_list_node *node;
-	for (node = linked_list_head(list); node; node = node->next) {
-		if (map->comparator(((hash_map_pair *)node->data)->key, key) == 0) {
-			linked_list_remove(list, node->data);
+	// The variable previous_node is set to the sentinel node, NOT the
+	// head item of the list.
+	linked_list_node *previous_node = list->head;
+	linked_list_node *current_node = previous_node->next;
+	while (true) {
+		// Is the first node a match?
+		if (map->comparator(((hash_map_pair *)current_node->data)->key, key) == 0) {
+			// Delete the node and relink.
+			previous_node->next = current_node->next;
+			if (list->free_data) {
+				list->free_data(current_node->data);
+			}
+			safe_free(current_node);
+			// Decrement structure sizes
+			list->size--;
 			map->size--;
+			return;
+		}
+		// Exit when we are at the end.
+		if (current_node->next == NULL) {
 			break;
 		}
+		// Increment
+		previous_node = current_node;
+		current_node = current_node->next;
 	}
 }
 

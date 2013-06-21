@@ -84,123 +84,6 @@ void test_prepend_dynamic() {
 	}
 }
 
-void test_remove_beginning() {
-	int data_before[] = {23, -37, -83, 92, 131, -13};
-	int data_after[] = { -37, -83, 92, 131, -13};
-
-	unsigned i;
-	for (i = 0; i < sizeof(data_before) / sizeof(*data_before); ++i) {
-		linked_list_append(list, &data_before[i]);
-	}
-
-	linked_list_node *node;
-	for (node = linked_list_head(list); node; node = node->next) {
-		if (*(int *)node->data == 23) {
-			linked_list_remove(list, node->data);
-			break;
-		}
-	}
-
-	for (i = 0, node = linked_list_head(list); node; ++i, node = node->next) {
-		TEST_ASSERT_EQUAL_INT(data_after[i], *(int *)node->data);
-	}
-}
-
-void test_remove_middle() {
-	int data_before[] = {23, -37, -83, 92, 131, -13};
-	int data_after[] = {23, -37, -83, 92, -13};
-
-	unsigned i;
-	for (i = 0; i < sizeof(data_before) / sizeof(*data_before); ++i) {
-		linked_list_append(list, &data_before[i]);
-	}
-
-	linked_list_node *node;
-	for (node = linked_list_head(list); node; node = node->next) {
-		if (*(int *)node->data == 131) {
-			linked_list_remove(list, node->data);
-			break;
-		}
-	}
-
-	for (i = 0, node = linked_list_head(list); node; ++i, node = node->next) {
-		TEST_ASSERT_EQUAL_INT(data_after[i], *(int *)node->data);
-	}
-}
-
-void test_remove_end() {
-	int data_before[] = {23, -37, -83, 92, 131, -13};
-	int data_after[] = {23, -37, -83, 92, 131};
-
-	unsigned i;
-	for (i = 0; i < sizeof(data_before) / sizeof(*data_before); ++i) {
-		linked_list_append(list, &data_before[i]);
-	}
-
-	linked_list_node *node;
-	for (node = linked_list_head(list); node; node = node->next) {
-		if (*(int *)node->data == -13) {
-			linked_list_remove(list, node->data);
-			break;
-		}
-	}
-
-	for (i = 0, node = linked_list_head(list); node; ++i, node = node->next) {
-		TEST_ASSERT_EQUAL_INT(data_after[i], *(int *)node->data);
-	}
-}
-
-void test_remove_str() {
-	linked_list *list_str = safe_malloc(sizeof(linked_list));
-	linked_list_init(list_str, (linked_list_destructor) NULL);
-
-	char *data_before[] = {"babak", "sean", "liu", "someone else"};
-	char *data_after[] = {"babak", "liu", "someone else"};
-
-	unsigned i;
-	for (i = 0; i < sizeof(data_before) / sizeof(*data_before); ++i) {
-		linked_list_append(list, data_before[i]);
-	}
-
-	linked_list_node *node;
-	for (node = linked_list_head(list); node; node = node->next) {
-		if (strcmp(node->data, "sean") == 0) {
-			linked_list_remove(list, node->data);
-			break;
-		}
-	}
-
-	for (i = 0, node = linked_list_head(list); node; ++i, node = node->next) {
-		TEST_ASSERT_EQUAL_STRING(data_after[i], (char *)node->data);
-	}
-
-	linked_list_free(list_str);
-}
-
-void test_remove_end_dynamic() {
-	int data_before[] = {23, -37, -83, 92, 131, -13};
-	int data_after[] = {23, -37, -83, 92, 131};
-
-	unsigned i;
-	for (i = 0; i < sizeof(data_before) / sizeof(*data_before); ++i) {
-		int *data = safe_malloc(sizeof(int));
-		*data = data_before[i];
-		linked_list_append(dynamic_list, data);
-	}
-
-	linked_list_node *node;
-	for (node = linked_list_head(dynamic_list); node; node = node->next) {
-		if (*(int *)node->data == -13) {
-			linked_list_remove(dynamic_list, node->data);
-			break;
-		}
-	}
-
-	for (i = 0, node = linked_list_head(dynamic_list); node; ++i, node = node->next) {
-		TEST_ASSERT_EQUAL_INT(data_after[i], *(int *)node->data);
-	}
-}
-
 void test_size() {
 	TEST_ASSERT_EQUAL_UINT(0, linked_list_size(list));
 
@@ -209,11 +92,6 @@ void test_size() {
 		linked_list_append(list, &data[i]);
 	}
 	TEST_ASSERT_EQUAL_UINT(4, linked_list_size(list));
-
-	for (int i = 0; i < sizeof(data) / sizeof(*data); i++) {
-		linked_list_remove(list, &data[i]);
-	}
-	TEST_ASSERT_EQUAL_UINT(0, linked_list_size(list));
 }
 
 void tearDown() {

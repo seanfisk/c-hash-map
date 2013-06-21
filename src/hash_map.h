@@ -86,7 +86,8 @@ void *hash_map_get(hash_map *map, void *key);
 void hash_map_put(hash_map *map, void *key, void *value);
 
 /**
- * Remove the mapping from the map.
+ * Remove the mapping from the map if this key exists. Calling this on
+ * a key for which there is no mapping does nothing (does not error).
  * @param map hash map structure
  * @param key key for mapping to remove
  */

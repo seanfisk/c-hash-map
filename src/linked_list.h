@@ -68,14 +68,6 @@ void linked_list_append(linked_list *list, void *data);
 void linked_list_prepend(linked_list *list, void *data);
 
 /**
- * Remove the specified data pointer from the list.
- *
- * @param list linked list structure
- * @param data data pointer
- */
-void linked_list_remove(linked_list *list, void *data);
-
-/**
  * Free the linked list and all its nodes and data. Uses @ref
  * linked_list_destructor function passed to @ref linked_list_init
  * @param list linked list structure
