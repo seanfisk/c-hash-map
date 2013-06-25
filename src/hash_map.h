@@ -23,7 +23,13 @@ typedef int (*hash_map_comparator)(const void *l, const void *r);
  * @param capacity maximum size of the map
  * @return an offset within the range `[0, capacity)`
  */
-typedef size_t (*hash_map_hash_func)(const void *key, size_t capacity);
+typedef size_t (*hash_map_hash_func)(const void *key, size_t capacity, int len);
+
+/**
+ * Size function to determine the size of each keys in the hash function
+ * @return the size of each key`
+ */
+typedef size_t (*hash_map_key_size)();
 
 /**
  * Hash map object
@@ -39,6 +45,8 @@ typedef struct {
 	hash_map_comparator comparator;
 	/** Key hash function */
 	hash_map_hash_func hash_func;
+	/** Key size function */
+	hash_map_key_size key_size;
 	/** Keys */
 	linked_list *keys;
 } hash_map;
@@ -60,7 +68,7 @@ typedef struct {
  * @param comparator key comparator function
  * @param hash_func key hash function
  */
-void hash_map_init(hash_map *map, size_t capacity, hash_map_comparator comparator, hash_map_hash_func hash_func);
+void hash_map_init(hash_map *map, size_t capacity, hash_map_comparator comparator, hash_map_hash_func hash_func, hash_map_key_size);
 
 /**
  * Free the hash map.

@@ -18,7 +18,7 @@ inline int hash_map_default_comparator(const void *l, const void *r) {
 	return *((unsigned long *) l) - *((unsigned long *) r);
 }
 
-void hash_map_init(hash_map *map, size_t capacity, hash_map_comparator comparator, hash_map_hash_func hash_func) {
+void hash_map_init(hash_map *map, size_t capacity, hash_map_comparator comparator, hash_map_hash_func hash_func, hash_map_key_size key_size) {
 	map->capacity = capacity;
 	map->size = 0;
 
@@ -36,6 +36,8 @@ void hash_map_init(hash_map *map, size_t capacity, hash_map_comparator comparato
 	} else {
 		map->hash_func = hash_map_default_hash_func;
 	}
+
+	map->key_size = key_size;
 
 	map->keys = (linked_list *) safe_malloc(sizeof(linked_list));
 	linked_list_init(map->keys, map->comparator, NULL); // no free_data func here because keys will be free'd by linked_list_free for **table
@@ -56,7 +58,7 @@ void hash_map_free(hash_map *map) {
 }
 
 void *hash_map_get(hash_map *map, void *key) {
-	linked_list *list = map->table[map->hash_func(key, map->capacity)];
+	linked_list *list = map->table[map->hash_func(key, map->capacity, map->key_size())];
 
 	if (!list) {
 		return NULL;
@@ -78,12 +80,12 @@ void *hash_map_get(hash_map *map, void *key) {
 }
 
 void hash_map_put(hash_map *map, void *key, void *value) {
-	linked_list *list = map->table[map->hash_func(key, map->capacity)];
+	linked_list *list = map->table[map->hash_func(key, map->capacity, map->key_size())];
 
 	if (!list) {
 		list = (linked_list *) safe_malloc(sizeof(linked_list));
 		linked_list_init(list, map->comparator, (linked_list_destructor) safe_free);
-		map->table[map->hash_func(key, map->capacity)] = list;
+		map->table[map->hash_func(key, map->capacity, map->key_size())] = list;
 	}
 
 	linked_list_node *head = linked_list_head(list);
@@ -120,4 +122,3 @@ size_t hash_map_size(hash_map *map) {
 linked_list *hash_map_keys(hash_map *map) {
 	return map->keys;
 }
-

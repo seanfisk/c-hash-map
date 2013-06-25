@@ -23,12 +23,12 @@ void setUp() {
 		hash_map_array[i] = safe_malloc(sizeof(hash_map));
 	}
 
-	hash_map_init(hash_map_array[0], 1000, (hash_map_comparator) strcmp, NULL);
-	hash_map_init(hash_map_array[1], 1000, (hash_map_comparator) strcmp, xPear16);
+	hash_map_init(hash_map_array[0], 1000, (hash_map_comparator) strcmp, NULL, strlen);
+	hash_map_init(hash_map_array[1], 1000, (hash_map_comparator) strcmp, xPear16, strlen);
 }
 
 void test_size() {
-    hash_map *this_hash_map;
+	hash_map *this_hash_map;
 
 	for (int i = 0; i < hash_map_array_size; i++) {
 		this_hash_map = hash_map_array[i];
@@ -53,7 +53,7 @@ void test_size() {
 }
 
 void test_put_get() {
-    hash_map *this_hash_map;
+	hash_map *this_hash_map;
 
 	for (int i = 0; i < hash_map_array_size; i++) {
 		this_hash_map = hash_map_array[i];
@@ -70,7 +70,7 @@ void test_put_get() {
 }
 
 void test_get_invalid_key() {
-    hash_map *this_hash_map;
+	hash_map *this_hash_map;
 
 	for (int i = 0; i < hash_map_array_size; i++) {
 		this_hash_map = hash_map_array[i];
@@ -79,27 +79,32 @@ void test_get_invalid_key() {
 	}
 }
 
+int int_size() {
+	return sizeof(uint64_t);
+}
+
+
 void test_default_hash_func() {
 	uint64_t i1 = 1, i2 = 1001;
 
-    hash_map *this_hash_map;
+	hash_map *this_hash_map;
 
 	for (int i = 0; i < hash_map_array_size; i++) {
 		this_hash_map = hash_map_array[i];
 
 		// these two should collide because of the %
-		TEST_ASSERT_EQUAL_UINT(this_hash_map->hash_func(&i1, this_hash_map->capacity),
-	                       this_hash_map->hash_func(&i2, this_hash_map->capacity));
+		TEST_ASSERT_EQUAL_UINT(this_hash_map->hash_func(&i1, this_hash_map->capacity, int_size()),
+		                       this_hash_map->hash_func(&i2, this_hash_map->capacity, int_size()));
 
 		// these two hash obtained by default hash_func should be equal (since the first 8-byte is the same)
-		TEST_ASSERT_EQUAL_UINT(this_hash_map->hash_func("1234567890", this_hash_map->capacity),
-	                       this_hash_map->hash_func("1234567809", this_hash_map->capacity));
+		TEST_ASSERT_EQUAL_UINT(this_hash_map->hash_func("1234567890", this_hash_map->capacity, int_size()),
+		                       this_hash_map->hash_func("1234567809", this_hash_map->capacity, int_size()));
 	}
 
 }
 
 void test_collision() {
-    hash_map *this_hash_map;
+	hash_map *this_hash_map;
 
 	for (int i = 0; i < hash_map_array_size; i++) {
 		this_hash_map = hash_map_array[i];
@@ -117,7 +122,7 @@ void test_keys() {
 	char *keys[] = { "key", "keys2", "1234567890", "1234567809" };
 	char *values[] = { "value", "value2", "9090", "0909" };
 
-    hash_map *this_hash_map;
+	hash_map *this_hash_map;
 
 	for (int i = 0; i < hash_map_array_size; i++) {
 		this_hash_map = hash_map_array[i];
@@ -141,14 +146,15 @@ void test_keys() {
 }
 
 void tearDown() {
-    hash_map *this_hash_map;
+	hash_map *this_hash_map;
 
 	for (int i = 0; i < hash_map_array_size; i++) {
 		this_hash_map = hash_map_array[i];
-
 		hash_map_free(this_hash_map);
 
-		TEST_ASSERT_EQUAL_INT(0, __malloc_counter);
 	}
+	safe_free(hash_map_array);
+
+	TEST_ASSERT_EQUAL_INT(0, __malloc_counter);
 }
 

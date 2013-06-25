@@ -5,18 +5,16 @@
 #include <stdbool.h>
 
 #include "hash_functions.h"
+#include "memory.h"
 
 size_t hash_map_default_hash_func(const void *key, size_t capacity) {
 	return *((size_t *) key) % capacity;
 }
 
-unsigned char xPear16(unsigned char *x) {
+size_t xPear16(unsigned char *x_copy, size_t capacity, int len) {
 	int h, i, j;
-	unsigned char ch, hex[20]="";
-
-
-	int len = sizeof(x) / sizeof(char);
-	printf("len = %d\n", len);
+	unsigned char ch;
+	size_t hex;
 
 	// to store h values
 	struct {
@@ -47,13 +45,18 @@ unsigned char xPear16(unsigned char *x) {
 		43,119,224, 71,122,142, 42,160,104, 48,247,103, 15, 11,138,239  // 16
 	};
 
+	char *x = safe_malloc(len);
+	memcpy(x, x_copy, len);
+
+	int r;
 	ch = x[0]; // save first byte
 	for(j = 0 ; j < 8; j++) {
 		// standard Pearson hash (output is h)
 		h=0;
 
 		for(i = 0; i < len; i++) {
-			h=T[h ^ x[i]].a;
+			r = abs(h ^ x[i]);
+			h=T[r].a;
 		}
 
 		hh[j].a=h;	// store result
@@ -62,12 +65,20 @@ unsigned char xPear16(unsigned char *x) {
 
 	x[0]=ch; // restore first byte
 
+	safe_free(x);
+
 	// concatenate the 8 stored values of h
-	sprintf(hex,"%02X%02X%02X%02X%02X%02X%02X%02X",
+	/*sprintf(hex,"%02X%02X%02X%02X%02X%02X%02X%02X",
 	        hh[0].a, hh[1].a,
 	        hh[2].a, hh[3].a,
 	        hh[4].a, hh[5].a,
-	        hh[6].a, hh[7].a);
+	        hh[6].a, hh[7].a);*/
+
+	// For now let me do it this way, but Liu doesn't think this is a good thing
+	for(int i = 0; i < 8; i++) {
+		hex = hex << 8;
+		hex = hex & hh[i].a;
+	}
 
 	return hex; // output 64-bit 16 hex bytes hash
 }
