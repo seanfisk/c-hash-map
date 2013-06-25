@@ -133,8 +133,22 @@ void test_keys() {
 	}
 }
 
+void test_contains_key() {
+	hash_map_put(map, "key", "value");
+	hash_map_put(map, "key2", "value2");
+	hash_map_put(map, "null key", NULL);
+
+	TEST_ASSERT_TRUE(hash_map_contains_key(map, "key"));
+	TEST_ASSERT_TRUE(hash_map_contains_key(map, "key2"));
+
+	TEST_ASSERT_FALSE(hash_map_contains_key(map, "not here"));
+
+	TEST_ASSERT_TRUE(hash_map_contains_key(map, "null key"));
+}
+
 void tearDown() {
 	hash_map_free(map);
 
 	TEST_ASSERT_EQUAL_INT(__malloc_counter, 0);
 }
+

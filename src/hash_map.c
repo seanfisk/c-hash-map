@@ -174,3 +174,25 @@ void hash_map_clear(hash_map *map) {
 	map->size = 0;
 }
 
+bool hash_map_contains_key(hash_map *map, void *key) {
+	linked_list *list = map->table[map->hash_func(key, map->capacity)];
+
+	if (!list) {
+		return false;
+	}
+
+	linked_list_node *head = linked_list_head(list);
+
+	while (head) {
+		hash_map_pair *pair = (hash_map_pair *) head->data;
+
+		if (map->comparator(pair->key, key) == 0) {
+			return true;
+		}
+
+		head = head->next;
+	}
+
+	return false;
+}
+
