@@ -107,4 +107,11 @@ size_t hash_map_size(hash_map *map);
  */
 linked_list *hash_map_keys(hash_map *map);
 
+/**
+ * Removes all key/value pairs from the map
+ * @param map hash map structure
+ */
+void hash_map_clear(hash_map *map);
+
 #endif
+

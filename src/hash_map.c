@@ -160,3 +160,17 @@ size_t hash_map_size(hash_map *map) {
 linked_list *hash_map_keys(hash_map *map) {
 	return map->keys;
 }
+
+void hash_map_clear(hash_map *map) {
+	for (size_t i = 0; i < map->capacity; i++) {
+		linked_list *list = map->table[i];
+
+		if (list) {
+			linked_list_free(list);
+			map->table[i] = NULL;
+		}
+	}
+
+	map->size = 0;
+}
+

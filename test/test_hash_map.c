@@ -98,6 +98,20 @@ void test_remove_non_existent() {
 	TEST_ASSERT_EQUAL_UINT(0, hash_map_size(map));
 }
 
+void test_clear() {
+	hash_map_put(map, "key", "value");
+	hash_map_put(map, "key2", "value2");
+	hash_map_put(map, "key3", "value3");
+
+	hash_map_clear(map);
+
+	TEST_ASSERT_EQUAL_UINT(0, hash_map_size(map));
+
+	TEST_ASSERT_NULL(hash_map_get(map, "key"));
+	TEST_ASSERT_NULL(hash_map_get(map, "key2"));
+	TEST_ASSERT_NULL(hash_map_get(map, "key3"));
+}
+
 void test_keys() {
 	char *keys[] = { "key", "keys2", "1234567890", "1234567809" };
 	char *values[] = { "value", "value2", "9090", "0909" };
