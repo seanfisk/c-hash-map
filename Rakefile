@@ -8,6 +8,8 @@ require 'tmpdir'
 PROJECT_CEEDLING_ROOT = 'vendor/ceedling'
 load "#{PROJECT_CEEDLING_ROOT}/lib/rakefile.rb"
 
+DOC_HTML_DIR = 'doc/html'
+
 # Tasks
 
 desc 'Build documentation with Doxygen'
@@ -48,26 +50,26 @@ namespace :test do
 end
 
 desc 'Upload current documentation to github-pages'
-task :upload do
-  # Credit:
-  # http://stackoverflow.com/questions/6245570/get-current-branch-name
-  # symbolic-ref, unlike rev-parse, will blow up when in detached HEAD
-  # state, which is probably more what we want.
-  current_branch = `git symbolic-ref --short HEAD`.strip()
-  Rake::Task['doc'].invoke
-
-  Dir.mktmpdir do |tmpdir|
-    FileUtils.cp_r ['README.md'] + Dir.glob('doc/html/*'), tmpdir
-    sh 'git', 'checkout', 'gh-pages'
-    FileUtils.cp_r Dir.glob("#{tmpdir}/*"), '.'
+task :upload_doc do
+  # If the repository exists already, don't re-clone it.
+  unless Dir.exists? "#{DOC_HTML_DIR}/.git"
+    # But do clone it if the path is not yet a git repository.
+    FileUtils.remove_entry_secure DOC_HTML_DIR if Dir.exists? DOC_HTML_DIR
+    puts "Cloning copy of repository to #{DOC_HTML_DIR}"
+    sh 'git', 'clone', '--branch', 'gh-pages',
+       'git@github.com:seanfisk/c-hash-map.git', DOC_HTML_DIR
   end
+  # Build the docs.
+  Rake::Task['doc'].invoke
+  # Upload the new documentation.
+  Dir.chdir(DOC_HTML_DIR)
+  puts 'Uploading new documentation...'
   sh 'git', 'add', '.'
   # We amend so we don't add useless commits.
   sh 'git', 'commit', '--amend', '-m',
      'new documentation uploaded to Github pages'
   # Now that we've amended, we must force push.
   sh 'git', 'push', '--force', 'origin', 'gh-pages'
-  sh 'git', 'checkout', current_branch
 end
 
 task default: 'test:everything'
