@@ -7,11 +7,11 @@
 #include "hash_functions.h"
 #include "memory.h"
 
-size_t hash_map_default_hash_func(const void *key, size_t capacity) {
+size_t hash_map_default_hash_func(const void *key, size_t capacity, int len) {
 	return *((size_t *) key) % capacity;
 }
 
-size_t xPear16(unsigned char *x_copy, size_t capacity, int len) {
+size_t xPear16(const void *x_copy, size_t capacity, int len) {
 	int h, i, j;
 	unsigned char ch;
 	size_t hex;
