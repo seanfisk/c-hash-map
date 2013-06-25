@@ -133,17 +133,25 @@ void test_keys() {
 	}
 }
 
-void test_contains_key() {
+void test_contains_key_empty_map() {
+	TEST_ASSERT_FALSE(hash_map_contains_key(map, "no keys in map"));
+}
+
+void test_contains_key_null_key() {
+	hash_map_put(map, "null key", NULL);
+	TEST_ASSERT_TRUE(hash_map_contains_key(map, "null key"));
+}
+
+void test_contains_key_nonexistent_key() {
+	TEST_ASSERT_FALSE(hash_map_contains_key(map, "not here"));
+}
+
+void test_contains_key_multiple() {
 	hash_map_put(map, "key", "value");
 	hash_map_put(map, "key2", "value2");
-	hash_map_put(map, "null key", NULL);
 
 	TEST_ASSERT_TRUE(hash_map_contains_key(map, "key"));
 	TEST_ASSERT_TRUE(hash_map_contains_key(map, "key2"));
-
-	TEST_ASSERT_FALSE(hash_map_contains_key(map, "not here"));
-
-	TEST_ASSERT_TRUE(hash_map_contains_key(map, "null key"));
 }
 
 void tearDown() {
@@ -151,4 +159,3 @@ void tearDown() {
 
 	TEST_ASSERT_EQUAL_INT(__malloc_counter, 0);
 }
-
