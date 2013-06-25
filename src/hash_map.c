@@ -40,7 +40,8 @@ void hash_map_init(hash_map *map, size_t capacity, hash_map_comparator comparato
 	map->key_size = key_size;
 
 	map->keys = (linked_list *) safe_malloc(sizeof(linked_list));
-	linked_list_init(map->keys, map->comparator, NULL); // no free_data func here because keys will be free'd by linked_list_free for **table
+	// No free_data func here because keys will be free'd by linked_list_free for **table
+	linked_list_init(map->keys, NULL);
 }
 
 void hash_map_free(hash_map *map) {
@@ -84,7 +85,8 @@ void hash_map_put(hash_map *map, void *key, void *value) {
 
 	if (!list) {
 		list = (linked_list *) safe_malloc(sizeof(linked_list));
-		linked_list_init(list, map->comparator, (linked_list_destructor) safe_free);
+
+		linked_list_init(list, (linked_list_destructor) safe_free);
 		map->table[map->hash_func(key, map->capacity, map->key_size())] = list;
 	}
 
@@ -115,6 +117,42 @@ void hash_map_put(hash_map *map, void *key, void *value) {
 	map->size++;
 }
 
+void hash_map_remove(hash_map *map, void *key) {
+	size_t offset = map->hash_func(key, map->capacity, map->key_size());
+	linked_list *list = map->table[offset];
+
+	if (!list) {
+		return;
+	}
+
+	// The variable previous_node is set to the sentinel node, NOT the
+	// head item of the list.
+	linked_list_node *previous_node = list->head;
+	linked_list_node *current_node = previous_node->next;
+	while (true) {
+		// Is the first node a match?
+		if (map->comparator(((hash_map_pair *)current_node->data)->key, key) == 0) {
+			// Delete the node and relink.
+			previous_node->next = current_node->next;
+			if (list->free_data) {
+				list->free_data(current_node->data);
+			}
+			safe_free(current_node);
+			// Decrement structure sizes
+			list->size--;
+			map->size--;
+			return;
+		}
+		// Exit when we are at the end.
+		if (current_node->next == NULL) {
+			break;
+		}
+		// Increment
+		previous_node = current_node;
+		current_node = current_node->next;
+	}
+}
+
 size_t hash_map_size(hash_map *map) {
 	return map->size;
 }
@@ -122,3 +160,39 @@ size_t hash_map_size(hash_map *map) {
 linked_list *hash_map_keys(hash_map *map) {
 	return map->keys;
 }
+
+void hash_map_clear(hash_map *map) {
+	for (size_t i = 0; i < map->capacity; i++) {
+		linked_list *list = map->table[i];
+
+		if (list) {
+			linked_list_free(list);
+			map->table[i] = NULL;
+		}
+	}
+
+	map->size = 0;
+}
+
+bool hash_map_contains_key(hash_map *map, void *key) {
+	linked_list *list = map->table[map->hash_func(key, map->capacity, map->key_size())];
+
+	if (!list) {
+		return false;
+	}
+
+	linked_list_node *head = linked_list_head(list);
+
+	while (head) {
+		hash_map_pair *pair = (hash_map_pair *) head->data;
+
+		if (map->comparator(pair->key, key) == 0) {
+			return true;
+		}
+
+		head = head->next;
+	}
+
+	return false;
+}
+

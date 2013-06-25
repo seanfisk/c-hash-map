@@ -41,14 +41,16 @@ void test_size() {
 		hash_map_put(this_hash_map, "key2", "value");
 		TEST_ASSERT_EQUAL_UINT(2, hash_map_size(this_hash_map));
 
-		// if the same key was updated, size should not change
-		hash_map_put(this_hash_map, "key", "value2");
-		TEST_ASSERT_EQUAL_UINT(2, hash_map_size(this_hash_map));
-
 		// if hashs collide, size should still work
 		hash_map_put(this_hash_map, "1234567890", "9090");
 		hash_map_put(this_hash_map, "1234567809", "0909");
 		TEST_ASSERT_EQUAL_UINT(4, hash_map_size(this_hash_map));
+
+		hash_map_remove(this_hash_map, "key");
+		hash_map_remove(this_hash_map, "key2");
+		hash_map_remove(this_hash_map, "1234567890");
+		hash_map_remove(this_hash_map, "1234567809");
+		TEST_ASSERT_EQUAL_UINT(0, hash_map_size(this_hash_map));
 	}
 }
 
@@ -118,6 +120,57 @@ void test_collision() {
 	}
 }
 
+void test_put_remove() {
+	hash_map *this_hash_map;
+
+	for (int i = 0; i < hash_map_array_size; i++) {
+		this_hash_map = hash_map_array[i];
+
+		hash_map_put(this_hash_map, "abcd", "the alphabet");
+		hash_map_put(this_hash_map, "1234", "some numbers");
+
+		hash_map_remove(this_hash_map, "abcd");
+		hash_map_remove(this_hash_map, "1234");
+
+		TEST_ASSERT_NULL(hash_map_get(this_hash_map, "abcd"));
+		TEST_ASSERT_NULL(hash_map_get(this_hash_map, "1234"));
+
+		hash_map_put(this_hash_map, "abcd", "try it again");
+		TEST_ASSERT_EQUAL_STRING("try it again", hash_map_get(this_hash_map, "abcd"));
+	}
+}
+
+void test_remove_non_existent() {
+	hash_map *this_hash_map;
+
+	for (int i = 0; i < hash_map_array_size; i++) {
+		this_hash_map = hash_map_array[i];
+
+		hash_map_remove(this_hash_map, "not here");
+		TEST_ASSERT_EQUAL_UINT(0, hash_map_size(this_hash_map));
+	}
+}
+
+void test_clear() {
+	hash_map *this_hash_map;
+
+	for (int i = 0; i < hash_map_array_size; i++) {
+		this_hash_map = hash_map_array[i];
+
+		hash_map_put(this_hash_map, "key", "value");
+		hash_map_put(this_hash_map, "key2", "value2");
+		hash_map_put(this_hash_map, "key3", "value3");
+
+		hash_map_clear(this_hash_map);
+
+		TEST_ASSERT_EQUAL_UINT(0, hash_map_size(this_hash_map));
+
+		TEST_ASSERT_NULL(hash_map_get(this_hash_map, "key"));
+		TEST_ASSERT_NULL(hash_map_get(this_hash_map, "key2"));
+		TEST_ASSERT_NULL(hash_map_get(this_hash_map, "key3"));
+	}
+}
+
 void test_keys() {
 	char *keys[] = { "key", "keys2", "1234567890", "1234567809" };
 	char *values[] = { "value", "value2", "9090", "0909" };
@@ -145,6 +198,51 @@ void test_keys() {
 	}
 }
 
+void test_contains_key_empty_map() {
+	hash_map *this_hash_map;
+
+	for (int i = 0; i < hash_map_array_size; i++) {
+		this_hash_map = hash_map_array[i];
+
+		TEST_ASSERT_FALSE(hash_map_contains_key(this_hash_map, "no keys in map"));
+	}
+}
+
+void test_contains_key_null_key() {
+	hash_map *this_hash_map;
+
+	for (int i = 0; i < hash_map_array_size; i++) {
+		this_hash_map = hash_map_array[i];
+
+		hash_map_put(this_hash_map, "null key", NULL);
+		TEST_ASSERT_TRUE(hash_map_contains_key(this_hash_map, "null key"));
+	}
+}
+
+void test_contains_key_nonexistent_key() {
+	hash_map *this_hash_map;
+
+	for (int i = 0; i < hash_map_array_size; i++) {
+		this_hash_map = hash_map_array[i];
+
+		TEST_ASSERT_FALSE(hash_map_contains_key(this_hash_map, "not here"));
+	}
+}
+
+void test_contains_key_multiple() {
+	hash_map *this_hash_map;
+
+	for (int i = 0; i < hash_map_array_size; i++) {
+		this_hash_map = hash_map_array[i];
+
+		hash_map_put(this_hash_map, "key", "value");
+		hash_map_put(this_hash_map, "key2", "value2");
+
+		TEST_ASSERT_TRUE(hash_map_contains_key(this_hash_map, "key"));
+		TEST_ASSERT_TRUE(hash_map_contains_key(this_hash_map, "key2"));
+	}
+}
+
 void tearDown() {
 	hash_map *this_hash_map;
 
@@ -155,6 +253,5 @@ void tearDown() {
 	}
 	safe_free(hash_map_array);
 
-	TEST_ASSERT_EQUAL_INT(0, __malloc_counter);
+	TEST_ASSERT_EQUAL_INT(__malloc_counter, 0);
 }
-

@@ -2,13 +2,12 @@
 
 #include "memory.h"
 
-void linked_list_init(linked_list *list, linked_list_comparator comparator, linked_list_destructor free_data) {
+void linked_list_init(linked_list *list, linked_list_destructor free_data) {
 	// Allocate a sentinel node
 	linked_list_node *sentinel = safe_malloc(sizeof(linked_list_node));
 	sentinel->next = NULL;
 	list->head = sentinel;
 
-	list->comparator = comparator;
 	list->free_data = free_data;
 
 	list->size = 0;
@@ -20,7 +19,7 @@ linked_list_node *linked_list_head(linked_list *list) {
 
 void linked_list_append(linked_list *list, void *data) {
 	linked_list_node *node = list->head;
-	while(node->next) {
+	while (node->next) {
 		node = node->next;
 	}
 	linked_list_node *new_node = safe_malloc(sizeof(linked_list_node));
@@ -40,35 +39,12 @@ void linked_list_prepend(linked_list *list, void *data) {
 	list->size++;
 }
 
-void linked_list_remove_first(linked_list *list, void *data) {
-	linked_list_node *previous_node = list->head;
-	linked_list_node *current_node = previous_node->next;
-	while(true) {
-		// Is the first node a match?
-		if(list->comparator(current_node->data, data) == 0) {
-			previous_node->next = current_node->next;
-			safe_free(current_node);
-
-			list->size--;
-
-			return;
-		}
-		// Exit when we are at the end.
-		if(current_node->next == NULL) {
-			break;
-		}
-		// Increment
-		previous_node = current_node;
-		current_node = current_node->next;
-	}
-}
-
 void linked_list_free(linked_list *list) {
 	linked_list_node *previous_node = list->head;
 	linked_list_node *current_node = previous_node->next;
 
-	while(current_node != NULL) {
-		if(list->free_data != NULL) {
+	while (current_node != NULL) {
+		if (list->free_data != NULL) {
 			list->free_data(current_node->data);
 		}
 		safe_free(previous_node);
@@ -86,4 +62,3 @@ void linked_list_free(linked_list *list) {
 size_t linked_list_size(linked_list *list) {
 	return list->size;
 }
-

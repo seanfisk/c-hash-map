@@ -2,15 +2,9 @@
 
 ## General
 
-* Doxygen documentation
-    * Upload to Github-pages
-* Run gcc and clang on Travis-CI
 * Remove vendorized ceedling and use it as a gem
 * Benchmarks
-
-## Code
-
-* Remove from hash map
+* Add a function pointer to the hash map which returns size of the key
 
 ### Optimizations
 
