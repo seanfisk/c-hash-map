@@ -10,6 +10,7 @@
 
 #include <stdlib.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 /**
  * Comparator function to determine whether `*l` and `*r` are equal.
@@ -107,4 +108,19 @@ size_t hash_map_size(hash_map *map);
  */
 linked_list *hash_map_keys(hash_map *map);
 
+/**
+ * Removes all key/value pairs from the map
+ * @param map hash map structure
+ */
+void hash_map_clear(hash_map *map);
+
+/**
+ * Check if the map contains the given key
+ * @param map hash map structure
+ * @param key the key to check
+ * @return true if map contains key
+ */
+bool hash_map_contains_key(hash_map *map, void *key);
+
 #endif
+
