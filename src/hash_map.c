@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 #include "memory.h"
 #include "linked_list.h"
@@ -59,7 +60,7 @@ void hash_map_free(hash_map *map) {
 }
 
 void *hash_map_get(hash_map *map, void *key) {
-	linked_list *list = map->table[map->hash_func(key, map->capacity, map->key_size())];
+	linked_list *list = map->table[map->hash_func(key, map->capacity, map->key_size(key))];
 
 	if (!list) {
 		return NULL;
@@ -81,13 +82,13 @@ void *hash_map_get(hash_map *map, void *key) {
 }
 
 void hash_map_put(hash_map *map, void *key, void *value) {
-	linked_list *list = map->table[map->hash_func(key, map->capacity, map->key_size())];
+	linked_list *list = map->table[map->hash_func(key, map->capacity, map->key_size(key))];
 
 	if (!list) {
 		list = (linked_list *) safe_malloc(sizeof(linked_list));
 
 		linked_list_init(list, (linked_list_destructor) safe_free);
-		map->table[map->hash_func(key, map->capacity, map->key_size())] = list;
+		map->table[map->hash_func(key, map->capacity, map->key_size(key))] = list;
 	}
 
 	linked_list_node *head = linked_list_head(list);
@@ -118,7 +119,7 @@ void hash_map_put(hash_map *map, void *key, void *value) {
 }
 
 void hash_map_remove(hash_map *map, void *key) {
-	size_t offset = map->hash_func(key, map->capacity, map->key_size());
+	size_t offset = map->hash_func(key, map->capacity, map->key_size(key));
 	linked_list *list = map->table[offset];
 
 	if (!list) {
@@ -175,7 +176,7 @@ void hash_map_clear(hash_map *map) {
 }
 
 bool hash_map_contains_key(hash_map *map, void *key) {
-	linked_list *list = map->table[map->hash_func(key, map->capacity, map->key_size())];
+	linked_list *list = map->table[map->hash_func(key, map->capacity, map->key_size(key))];
 
 	if (!list) {
 		return false;
