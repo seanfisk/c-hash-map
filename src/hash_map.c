@@ -8,16 +8,11 @@
 
 #include "hash_map.h"
 
-// when "-g" is used redefine inline to static or else the linker will try to link the function and fail (since it's inline)
-#ifdef TEST
-#define inline static
-#endif
-
-inline int hash_map_default_comparator(const void *l, const void *r) {
+int hash_map_default_comparator(const void *l, const void *r) {
 	return *((unsigned long *) l) - *((unsigned long *) r);
 }
 
-inline size_t hash_map_default_hash_func(const void *key, size_t capacity) {
+size_t hash_map_default_hash_func(const void *key, size_t capacity) {
 	return *((size_t *) key) % capacity;
 }
 
