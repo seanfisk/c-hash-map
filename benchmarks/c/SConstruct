@@ -1,0 +1,35 @@
+# -*- mode: python; -*-
+# Wrote a SConstruct because I was tired of Ceedling...
+
+import os
+import os.path
+
+HASH_MAP_SOURCE_DIR = '../../src'
+OVERRIDE_VARS = ['CC', 'CPPFLAGS', 'CFLAGS', 'LINK', 'LINKFLAGS']
+
+env_vars = dict(
+    CFLAGS='-std=c99',
+)
+
+for var in OVERRIDE_VARS:
+    try:
+        env_vars[var] = os.environ[var]
+    except KeyError:
+        pass
+
+env = Environment(**env_vars)
+bench = env.Program(
+    target='bench',
+    # This is kinda ugly.
+    source=[
+        'bench.c',
+        'timing.c',
+        [os.path.join(HASH_MAP_SOURCE_DIR, c_file) for c_file in [
+             'hash_map.c',
+            'linked_list.c',
+            'memory.c',
+        ]]
+    ],
+    CPPPATH='#' + HASH_MAP_SOURCE_DIR)
+
+env.Default(bench)
