@@ -22,6 +22,7 @@ typedef int (*hash_map_comparator)(const void *l, const void *r);
  * Hash function
  * @param key key to hash
  * @param capacity maximum size of the map
+ * @param len the size of the key passed as the first argument
  * @return an offset within the range `[0, capacity)`
  */
 typedef size_t (*hash_map_hash_func)(const void *key, size_t capacity, int len);
