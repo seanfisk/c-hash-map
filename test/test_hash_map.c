@@ -24,7 +24,7 @@ void setUp() {
 	}
 
 	hash_map_init(hash_map_array[0], 1000, (hash_map_comparator) strcmp, NULL, strlen);
-	hash_map_init(hash_map_array[1], 1000, (hash_map_comparator) strcmp, xPear16, strlen);
+	hash_map_init(hash_map_array[1], 1000, (hash_map_comparator) strcmp, pearson_hash, strlen);
 }
 
 void test_size() {

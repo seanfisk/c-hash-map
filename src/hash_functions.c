@@ -11,7 +11,19 @@ size_t hash_map_default_hash_func(const void *key, size_t capacity, int len) {
 	return *((size_t *) key) % capacity;
 }
 
-size_t xPear16(const void *x_copy, size_t capacity, int len) {
+size_t additive(const void *key, size_t capacity, int len) {
+	const char *key2 = (const char *) key;
+	int hash = len;
+
+	for (int i = 0; i < len; ++i) {
+		hash += key2[i];
+	}
+
+
+	return (hash % capacity);
+}
+
+size_t pearson_hash(const void *x_copy, size_t capacity, int len) {
 	int h, i, j;
 	unsigned char ch;
 	size_t hex;
